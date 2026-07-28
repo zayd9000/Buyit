@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Hub - USD Price & Market Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #38bdf8;
+        }
+
+        .card {
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+
+        input, select {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #38bdf8;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 12px;
+            background-color: #38bdf8;
+            color: #0f172a;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-add:hover {
+            background-color: #7dd3fc;
+        }
+
+        .search-bar {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .summary-bar {
+            display: flex;
+            justify-content: space-between;
+            background-color: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-item span {
+            display: block;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .summary-item strong {
+            font-size: 18px;
+            color: #38bdf8;
+        }
+
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .order-card {
+            background-color: #1e293b;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #334155;
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .order-info h3 {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .order-info p {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .price-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .tag-good {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid #22c55e;
+        }
+
+        .tag-high {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid #ef4444;
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+        }
+
+        .save-indicator {
+            font-size: 11px;
+            color: #4ade80;
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .save-indicator.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Order Hub & Price Tracker (USD)</h1>
+
+    <!-- Auto-Saved Input Form -->
+    <div class="card">
+        <div class="save-indicator" id="saveIndicator">✓ Saved automatically</div>
+        <div class="form-grid">
+            <div class="input-group">
+                <label for="itemName">Item Name</label>
+                <input type="text" id="itemName" placeholder="e.g. Dior Sauvage" oninput="autoSaveDraft()">
+            </div>
+            <div class="input-group">
+                <label for="costPrice">Cost Price ($)</label>
+                <input type="number" id="costPrice" placeholder="100" oninput="autoSaveDraft()">
+            </div>
+            <div class="input-group">
+                <label for="marketPrice">Market Price ($)</label>
+                <input type="number" id="marketPrice" placeholder="150" oninput="autoSaveDraft()">
+            </div>
+            <div class="input-group">
+                <label for="targetPrice">Good Buy Target ($)</label>
+                <input type="number" id="targetPrice" placeholder="110" oninput="autoSaveDraft()">
+            </div>
+            <div class="input-group">
+                <label for="sellPriceUSD">Selling Price ($)</label>
+                <input type="number" id="sellPriceUSD" placeholder="140" oninput="autoSaveDraft()">
+            </div>
+        </div>
+        <button class="btn-add" onclick="addOrder()">Add Item to Hub</button>
+    </div>
+
+    <!-- Summary -->
+    <div class="summary-bar">
+        <div class="summary-item">
+            <span>Total Tracked Items</span>
+            <strong id="totalCount">0</strong>
+        </div>
+        <div class="summary-item">
+            <span>Total Cost ($)</span>
+            <strong id="totalCostUSD">$0.00</strong>
+        </div>
+        <div class="summary-item">
+            <span>Est. Total Profit ($)</span>
+            <strong id="totalProfitUSD">$0.00</strong>
+        </div>
+    </div>
+
+    <!-- Search -->
+    <input type="text" id="searchBar" class="search-bar" placeholder="Search saved items..." onkeyup="renderOrders()">
+
+    <!-- Orders List -->
+    <div id="ordersList" class="orders-list"></div>
+</div>
+
+<script>
+    let orders = JSON.parse(localStorage.getItem('hubOrdersUSD')) || [];
+
+    // Load saved form draft on page refresh
+    window.onload = function() {
+        const draft = JSON.parse(localStorage.getItem('formDraftUSD')) || {};
+        if (draft.name) document.getElementById('itemName').value = draft.name;
+        if (draft.costUSD) document.getElementById('costPrice').value = draft.costUSD;
+        if (draft.marketUSD) document.getElementById('marketPrice').value = draft.marketUSD;
+        if (draft.targetUSD) document.getElementById('targetPrice').value = draft.targetUSD;
+        if (draft.sellUSD) document.getElementById('sellPriceUSD').value = draft.sellUSD;
+        renderOrders();
+    };
+
+    function autoSaveDraft() {
+        const draft = {
+            name: document.getElementById('itemName').value,
+            costUSD: document.getElementById('costPrice').value,
+            marketUSD: document.getElementById('marketPrice').value,
+            targetUSD: document.getElementById('targetPrice').value,
+            sellUSD: document.getElementById('sellPriceUSD').value
+        };
+        localStorage.setItem('formDraftUSD', JSON.stringify(draft));
+        showSaveIndicator();
+    }
+
+    function showSaveIndicator() {
+        const indicator = document.getElementById('saveIndicator');
+        indicator.classList.add('visible');
+        setTimeout(() => {
+            indicator.classList.remove('visible');
+        }, 1200);
+    }
+
+    function addOrder() {
+        const name = document.getElementById('itemName').value;
+        const costUSD = parseFloat(document.getElementById('costPrice').value) || 0;
+        const marketUSD = parseFloat(document.getElementById('marketPrice').value) || 0;
+        const targetUSD = parseFloat(document.getElementById('targetPrice').value) || 0;
+        const sellUSD = parseFloat(document.getElementById('sellPriceUSD').value) || 0;
+
+        if (!name) {
+            alert("Please enter an item name.");
+            return;
+        }
+
+        const newOrder = {
+            id: Date.now(),
+            name,
+            costUSD,
+            marketUSD,
+            targetUSD,
+            sellUSD
+        };
+
+        orders.push(newOrder);
+        saveAndRender();
+
+        // Clear Form & Draft
+        document.getElementById('itemName').value = '';
+        document.getElementById('costPrice').value = '';
+        document.getElementById('marketPrice').value = '';
+        document.getElementById('targetPrice').value = '';
+        document.getElementById('sellPriceUSD').value = '';
+        localStorage.removeItem('formDraftUSD');
+    }
+
+    function deleteOrder(id) {
+        orders = orders.filter(item => item.id !== id);
+        saveAndRender();
+    }
+
+    function saveAndRender() {
+        localStorage.setItem('hubOrdersUSD', JSON.stringify(orders));
+        renderOrders();
+    }
+
+    function renderOrders() {
+        const listContainer = document.getElementById('ordersList');
+        const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+        listContainer.innerHTML = '';
+
+        let totalCost = 0;
+        let totalProfit = 0;
+        let matchCount = 0;
+
+        orders.forEach(item => {
+            const profitUSD = item.sellUSD - item.costUSD;
+
+            totalCost += item.costUSD;
+            totalProfit += profitUSD;
+
+            if (item.name.toLowerCase().includes(searchTerm)) {
+                matchCount++;
+
+                // Determine price evaluation badge
+                let priceBadge = '';
+                if (item.targetUSD > 0) {
+                    if (item.costUSD <= item.targetUSD) {
+                        priceBadge = `<span class="price-tag tag-good">✓ Good Price to Buy</span>`;
+                    } else {
+                        priceBadge = `<span class="price-tag tag-high">✕ Above Target Price</span>`;
+                    }
+                }
+
+                const marketText = item.marketUSD ? ` | Market: $${item.marketUSD.toFixed(2)}` : '';
+
+                const itemHTML = `
+                    <div class="order-card">
+                        <div class="order-info">
+                            <h3>${item.name}</h3>
+                            <p>Cost: $${item.costUSD.toFixed(2)}${marketText}</p>
+                            ${priceBadge}
+                        </div>
+                        <div class="order-info" style="text-align: right;">
+                            <p>Sell: $${item.sellUSD.toFixed(2)}</p>
+                            <p style="color: ${profitUSD >= 0 ? '#4ade80' : '#f87171'}; font-weight: 600;">
+                                Profit: $${profitUSD.toFixed(2)}
+                            </p>
+                        </div>
+                        <button class="btn-delete" onclick="deleteOrder(${item.id})">✕</button>
+                    </div>
+                `;
+                listContainer.innerHTML += itemHTML;
+            }
+        });
+
+        document.getElementById('totalCount').innerText = matchCount;
+        document.getElementById('totalCostUSD').innerText = '$' + totalCost.toFixed(2);
+        document.getElementById('totalProfitUSD').innerText = '$' + totalProfit.toFixed(2);
+    }
+</script>
+
+</body>
+</html>
