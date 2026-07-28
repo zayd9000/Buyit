@@ -1,9 +1,9 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Hub - USD Price & Market Tracker</title>
+    <title>Car Deal & Profit Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -23,7 +23,7 @@
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
         }
 
         h1 {
@@ -43,10 +43,19 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 15px;
         }
 
@@ -62,16 +71,16 @@
             color: #94a3b8;
         }
 
-        input, select {
+        input, select, textarea {
             padding: 10px;
             border-radius: 6px;
             border: 1px solid #475569;
             background-color: #0f172a;
             color: #fff;
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #38bdf8;
         }
@@ -86,6 +95,7 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background 0.2s;
+            margin-top: 10px;
         }
 
         .btn-add:hover {
@@ -99,7 +109,7 @@
 
         .summary-bar {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             background-color: #1e293b;
             padding: 15px;
             border-radius: 8px;
@@ -122,41 +132,57 @@
             color: #38bdf8;
         }
 
-        .orders-list {
+        .cars-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .order-card {
+        .car-card {
             background-color: #1e293b;
-            border-radius: 8px;
-            padding: 15px;
+            border-radius: 10px;
+            padding: 16px;
             border: 1px solid #334155;
             display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 10px;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 15px;
             align-items: center;
         }
 
-        .order-info h3 {
+        .car-title {
             font-size: 16px;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-
-        .order-info p {
-            font-size: 12px;
-            color: #94a3b8;
-        }
-
-        .price-tag {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
             font-weight: 700;
-            margin-top: 5px;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: #0f172a;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+        }
+
+        .badge-clean { border-color: #22c55e; color: #4ade80; }
+        .badge-crashed { border-color: #ef4444; color: #f87171; }
+
+        .price-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px;
         }
 
         .tag-good {
@@ -190,197 +216,263 @@
             transition: opacity 0.3s ease;
         }
 
-        .save-indicator.visible {
-            opacity: 1;
-        }
+        .save-indicator.visible { opacity: 1; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Order Hub & Price Tracker (USD)</h1>
+    <h1>Car Deal & Profit Tracker</h1>
 
-    <!-- Auto-Saved Input Form -->
+    <!-- Form Input Card -->
     <div class="card">
-        <div class="save-indicator" id="saveIndicator">✓ Saved automatically</div>
+        <div class="save-indicator" id="saveIndicator">✓ Draft saved</div>
+        
+        <div class="section-title">1. Vehicle Details</div>
         <div class="form-grid">
             <div class="input-group">
-                <label for="itemName">Item Name</label>
-                <input type="text" id="itemName" placeholder="e.g. Dior Sauvage" oninput="autoSaveDraft()">
+                <label>Brand</label>
+                <input type="text" id="brand" placeholder="e.g. Toyota" oninput="autoSaveDraft()">
             </div>
             <div class="input-group">
-                <label for="costPrice">Cost Price ($)</label>
-                <input type="number" id="costPrice" placeholder="100" oninput="autoSaveDraft()">
+                <label>Model</label>
+                <input type="text" id="model" placeholder="e.g. Land Cruiser" oninput="autoSaveDraft()">
             </div>
             <div class="input-group">
-                <label for="marketPrice">Market Price ($)</label>
-                <input type="number" id="marketPrice" placeholder="150" oninput="autoSaveDraft()">
+                <label>Trim / Edition</label>
+                <input type="text" id="trim" placeholder="e.g. GX.R LIMITED" oninput="autoSaveDraft()">
             </div>
             <div class="input-group">
-                <label for="targetPrice">Good Buy Target ($)</label>
-                <input type="number" id="targetPrice" placeholder="110" oninput="autoSaveDraft()">
+                <label>Year</label>
+                <input type="number" id="year" placeholder="2025" oninput="autoSaveDraft()">
             </div>
             <div class="input-group">
-                <label for="sellPriceUSD">Selling Price ($)</label>
-                <input type="number" id="sellPriceUSD" placeholder="140" oninput="autoSaveDraft()">
+                <label>KM / Mileage</label>
+                <input type="number" id="km" placeholder="e.g. 15000" oninput="autoSaveDraft()">
             </div>
         </div>
-        <button class="btn-add" onclick="addOrder()">Add Item to Hub</button>
+
+        <div class="section-title">2. Specs & Condition</div>
+        <div class="form-grid">
+            <div class="input-group">
+                <label>Accident History</label>
+                <select id="condition" onchange="autoSaveDraft()">
+                    <option value="Clean">Clean (No Crash)</option>
+                    <option value="Crashed / Repaired">Crashed / Repaired</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Warranty Status</label>
+                <select id="warranty" onchange="autoSaveDraft()">
+                    <option value="Under Warranty">Under Warranty</option>
+                    <option value="No Warranty">No Warranty</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Turbo Option</label>
+                <select id="turbo" onchange="autoSaveDraft()">
+                    <option value="Turbo">Turbo</option>
+                    <option value="Non-Turbo">Non-Turbo</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Fuel / Engine Type</label>
+                <select id="hybrid" onchange="autoSaveDraft()">
+                    <option value="Gasoline">Gasoline</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Diesel">Diesel</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section-title">3. Pricing & Evaluation ($ USD)</div>
+        <div class="form-grid">
+            <div class="input-group">
+                <label>Asking / Offering Price ($)</label>
+                <input type="number" id="askingPrice" placeholder="e.g. 65000" oninput="autoSaveDraft()">
+            </div>
+            <div class="input-group">
+                <label>Market Price ($)</label>
+                <input type="number" id="marketPrice" placeholder="e.g. 72000" oninput="autoSaveDraft()">
+            </div>
+            <div class="input-group">
+                <label>Target Buy Price ($)</label>
+                <input type="number" id="targetPrice" placeholder="e.g. 66000" oninput="autoSaveDraft()">
+            </div>
+            <div class="input-group">
+                <label>Notes / Extra Details</label>
+                <input type="text" id="notes" placeholder="e.g. First owner, full dealer service" oninput="autoSaveDraft()">
+            </div>
+        </div>
+
+        <button class="btn-add" onclick="addCar()">Add Vehicle to Hub</button>
     </div>
 
-    <!-- Summary -->
+    <!-- Summary Bar -->
     <div class="summary-bar">
         <div class="summary-item">
-            <span>Total Tracked Items</span>
+            <span>Vehicles Tracked</span>
             <strong id="totalCount">0</strong>
         </div>
         <div class="summary-item">
-            <span>Total Cost ($)</span>
-            <strong id="totalCostUSD">$0.00</strong>
-        </div>
-        <div class="summary-item">
-            <span>Est. Total Profit ($)</span>
-            <strong id="totalProfitUSD">$0.00</strong>
+            <span>Good Buy Deals</span>
+            <strong id="goodDealsCount" style="color: #4ade80;">0</strong>
         </div>
     </div>
 
     <!-- Search -->
-    <input type="text" id="searchBar" class="search-bar" placeholder="Search saved items..." onkeyup="renderOrders()">
+    <input type="text" id="searchBar" class="search-bar" placeholder="Search by Brand, Model, Trim, Year..." onkeyup="renderCars()">
 
-    <!-- Orders List -->
-    <div id="ordersList" class="orders-list"></div>
+    <!-- Car List Container -->
+    <div id="carsList" class="cars-list"></div>
 </div>
 
 <script>
-    let orders = JSON.parse(localStorage.getItem('hubOrdersUSD')) || [];
+    let cars = JSON.parse(localStorage.getItem('dealershipCarHub')) || [];
 
-    // Load saved form draft on page refresh
     window.onload = function() {
-        const draft = JSON.parse(localStorage.getItem('formDraftUSD')) || {};
-        if (draft.name) document.getElementById('itemName').value = draft.name;
-        if (draft.costUSD) document.getElementById('costPrice').value = draft.costUSD;
-        if (draft.marketUSD) document.getElementById('marketPrice').value = draft.marketUSD;
-        if (draft.targetUSD) document.getElementById('targetPrice').value = draft.targetUSD;
-        if (draft.sellUSD) document.getElementById('sellPriceUSD').value = draft.sellUSD;
-        renderOrders();
+        const draft = JSON.parse(localStorage.getItem('carDraftData')) || {};
+        if (draft.brand) document.getElementById('brand').value = draft.brand;
+        if (draft.model) document.getElementById('model').value = draft.model;
+        if (draft.trim) document.getElementById('trim').value = draft.trim;
+        if (draft.year) document.getElementById('year').value = draft.year;
+        if (draft.km) document.getElementById('km').value = draft.km;
+        if (draft.condition) document.getElementById('condition').value = draft.condition;
+        if (draft.warranty) document.getElementById('warranty').value = draft.warranty;
+        if (draft.turbo) document.getElementById('turbo').value = draft.turbo;
+        if (draft.hybrid) document.getElementById('hybrid').value = draft.hybrid;
+        if (draft.asking) document.getElementById('askingPrice').value = draft.asking;
+        if (draft.market) document.getElementById('marketPrice').value = draft.market;
+        if (draft.target) document.getElementById('targetPrice').value = draft.target;
+        if (draft.notes) document.getElementById('notes').value = draft.notes;
+        renderCars();
     };
 
     function autoSaveDraft() {
         const draft = {
-            name: document.getElementById('itemName').value,
-            costUSD: document.getElementById('costPrice').value,
-            marketUSD: document.getElementById('marketPrice').value,
-            targetUSD: document.getElementById('targetPrice').value,
-            sellUSD: document.getElementById('sellPriceUSD').value
+            brand: document.getElementById('brand').value,
+            model: document.getElementById('model').value,
+            trim: document.getElementById('trim').value,
+            year: document.getElementById('year').value,
+            km: document.getElementById('km').value,
+            condition: document.getElementById('condition').value,
+            warranty: document.getElementById('warranty').value,
+            turbo: document.getElementById('turbo').value,
+            hybrid: document.getElementById('hybrid').value,
+            asking: document.getElementById('askingPrice').value,
+            market: document.getElementById('marketPrice').value,
+            target: document.getElementById('targetPrice').value,
+            notes: document.getElementById('notes').value
         };
-        localStorage.setItem('formDraftUSD', JSON.stringify(draft));
+        localStorage.setItem('carDraftData', JSON.stringify(draft));
         showSaveIndicator();
     }
 
     function showSaveIndicator() {
         const indicator = document.getElementById('saveIndicator');
         indicator.classList.add('visible');
-        setTimeout(() => {
-            indicator.classList.remove('visible');
-        }, 1200);
+        setTimeout(() => indicator.classList.remove('visible'), 1000);
     }
 
-    function addOrder() {
-        const name = document.getElementById('itemName').value;
-        const costUSD = parseFloat(document.getElementById('costPrice').value) || 0;
-        const marketUSD = parseFloat(document.getElementById('marketPrice').value) || 0;
-        const targetUSD = parseFloat(document.getElementById('targetPrice').value) || 0;
-        const sellUSD = parseFloat(document.getElementById('sellPriceUSD').value) || 0;
+    function addCar() {
+        const brand = document.getElementById('brand').value.toUpperCase();
+        const model = document.getElementById('model').value;
+        const trim = document.getElementById('trim').value.toUpperCase();
+        const year = document.getElementById('year').value;
+        const km = parseFloat(document.getElementById('km').value) || 0;
+        const condition = document.getElementById('condition').value;
+        const warranty = document.getElementById('warranty').value;
+        const turbo = document.getElementById('turbo').value;
+        const hybrid = document.getElementById('hybrid').value;
+        const asking = parseFloat(document.getElementById('askingPrice').value) || 0;
+        const market = parseFloat(document.getElementById('marketPrice').value) || 0;
+        const target = parseFloat(document.getElementById('targetPrice').value) || 0;
+        const notes = document.getElementById('notes').value;
 
-        if (!name) {
-            alert("Please enter an item name.");
+        if (!brand || !model) {
+            alert("Please enter at least the Brand and Model.");
             return;
         }
 
-        const newOrder = {
+        const newCar = {
             id: Date.now(),
-            name,
-            costUSD,
-            marketUSD,
-            targetUSD,
-            sellUSD
+            fullName: `${brand} ${model} ${year} ${trim}`.trim(),
+            brand, model, trim, year, km, condition, warranty, turbo, hybrid,
+            asking, market, target, notes
         };
 
-        orders.push(newOrder);
-        saveAndRender();
-
-        // Clear Form & Draft
-        document.getElementById('itemName').value = '';
-        document.getElementById('costPrice').value = '';
-        document.getElementById('marketPrice').value = '';
-        document.getElementById('targetPrice').value = '';
-        document.getElementById('sellPriceUSD').value = '';
-        localStorage.removeItem('formDraftUSD');
+        cars.push(newCar);
+        localStorage.setItem('dealershipCarHub', JSON.stringify(cars));
+        
+        // Reset Inputs & Draft
+        document.querySelectorAll('input').forEach(i => i.value = '');
+        document.getElementById('notes').value = '';
+        localStorage.removeItem('carDraftData');
+        renderCars();
     }
 
-    function deleteOrder(id) {
-        orders = orders.filter(item => item.id !== id);
-        saveAndRender();
+    function deleteCar(id) {
+        cars = cars.filter(c => c.id !== id);
+        localStorage.setItem('dealershipCarHub', JSON.stringify(cars));
+        renderCars();
     }
 
-    function saveAndRender() {
-        localStorage.setItem('hubOrdersUSD', JSON.stringify(orders));
-        renderOrders();
-    }
-
-    function renderOrders() {
-        const listContainer = document.getElementById('ordersList');
-        const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+    function renderCars() {
+        const listContainer = document.getElementById('carsList');
+        const search = document.getElementById('searchBar').value.toLowerCase();
         listContainer.innerHTML = '';
 
-        let totalCost = 0;
-        let totalProfit = 0;
-        let matchCount = 0;
+        let totalDeals = 0;
+        let goodDeals = 0;
 
-        orders.forEach(item => {
-            const profitUSD = item.sellUSD - item.costUSD;
+        cars.forEach(car => {
+            if (car.fullName.toLowerCase().includes(search) || car.notes.toLowerCase().includes(search)) {
+                totalDeals++;
 
-            totalCost += item.costUSD;
-            totalProfit += profitUSD;
-
-            if (item.name.toLowerCase().includes(searchTerm)) {
-                matchCount++;
-
-                // Determine price evaluation badge
-                let priceBadge = '';
-                if (item.targetUSD > 0) {
-                    if (item.costUSD <= item.targetUSD) {
-                        priceBadge = `<span class="price-tag tag-good">✓ Good Price to Buy</span>`;
+                let evaluationBadge = '';
+                if (car.target > 0) {
+                    if (car.asking <= car.target) {
+                        goodDeals++;
+                        const margin = car.market > 0 ? (car.market - car.asking) : 0;
+                        evaluationBadge = `<div class="price-badge tag-good">✓ GOOD PRICE TO BUY (${margin > 0 ? '+$' + margin.toLocaleString() + ' Est. Profit' : 'Below Target'})</div>`;
                     } else {
-                        priceBadge = `<span class="price-tag tag-high">✕ Above Target Price</span>`;
+                        const difference = car.asking - car.target;
+                        evaluationBadge = `<div class="price-badge tag-high">✕ OVER TARGET (+$${difference.toLocaleString()})</div>`;
                     }
                 }
 
-                const marketText = item.marketUSD ? ` | Market: $${item.marketUSD.toFixed(2)}` : '';
+                const condBadge = car.condition === 'Clean' 
+                    ? `<span class="badge badge-clean">Clean</span>` 
+                    : `<span class="badge badge-crashed">Crashed/Repaired</span>`;
 
-                const itemHTML = `
-                    <div class="order-card">
-                        <div class="order-info">
-                            <h3>${item.name}</h3>
-                            <p>Cost: $${item.costUSD.toFixed(2)}${marketText}</p>
-                            ${priceBadge}
+                const carHTML = `
+                    <div class="car-card">
+                        <div>
+                            <div class="car-title">${car.fullName}</div>
+                            <div class="tags-container">
+                                ${condBadge}
+                                <span class="badge">${car.km.toLocaleString()} KM</span>
+                                <span class="badge">${car.warranty}</span>
+                                <span class="badge">${car.turbo}</span>
+                                <span class="badge">${car.hybrid}</span>
+                            </div>
+                            ${evaluationBadge}
+                            ${car.notes ? `<p style="font-size:11px; color:#94a3b8; margin-top:6px;">Note: ${car.notes}</p>` : ''}
                         </div>
-                        <div class="order-info" style="text-align: right;">
-                            <p>Sell: $${item.sellUSD.toFixed(2)}</p>
-                            <p style="color: ${profitUSD >= 0 ? '#4ade80' : '#f87171'}; font-weight: 600;">
-                                Profit: $${profitUSD.toFixed(2)}
-                            </p>
+                        <div style="text-align: right; font-size: 13px;">
+                            <p><strong>Asking:</strong> $${car.asking.toLocaleString()}</p>
+                            <p style="color:#94a3b8;"><strong>Market:</strong> $${car.market.toLocaleString()}</p>
+                            <p style="color:#38bdf8;"><strong>Target:</strong> $${car.target.toLocaleString()}</p>
                         </div>
-                        <button class="btn-delete" onclick="deleteOrder(${item.id})">✕</button>
+                        <button class="btn-delete" onclick="deleteCar(${car.id})">✕</button>
                     </div>
                 `;
-                listContainer.innerHTML += itemHTML;
+                listContainer.innerHTML += carHTML;
             }
         });
 
-        document.getElementById('totalCount').innerText = matchCount;
-        document.getElementById('totalCostUSD').innerText = '$' + totalCost.toFixed(2);
-        document.getElementById('totalProfitUSD').innerText = '$' + totalProfit.toFixed(2);
+        document.getElementById('totalCount').innerText = totalDeals;
+        document.getElementById('goodDealsCount').innerText = goodDeals;
     }
 </script>
 
