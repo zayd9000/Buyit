@@ -562,11 +562,11 @@
             align-items: center;
             gap: 4px;
             color: #64748b;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 800;
             cursor: pointer;
-            width: 30%;
-            padding: 6px;
+            width: 23%;
+            padding: 6px 2px;
             border-radius: 10px;
             transition: all 0.2s ease;
         }
@@ -577,7 +577,7 @@
         }
 
         .nav-icon {
-            font-size: 18px;
+            font-size: 17px;
         }
 
         /* Modal Overlay for Sold Prompt */
@@ -767,7 +767,7 @@
                 <div class="input-box form-grid-full">
                     <div class="input-icon">📅</div>
                     <div class="input-content">
-                        <label>Date Bought (Optional if not bought yet)</label>
+                        <label>Date Bought (Auto-Deducts Capital)</label>
                         <input type="date" id="dateBought" onchange="autoSaveDraft()">
                     </div>
                 </div>
@@ -853,7 +853,7 @@
     <div id="tabReference" class="tab-page">
         <div class="hero-section">
             <h1 class="hero-title">Price <span>Reference</span></h1>
-            <p class="hero-subtitle">Set baseline "Good Buy" prices for vehicle configurations (KM ignored).</p>
+            <p class="hero-subtitle">Set baseline "Good Buy" prices & target mileage for vehicle configurations.</p>
         </div>
 
         <!-- Reference Input Form -->
@@ -893,6 +893,13 @@
                     <div class="input-content">
                         <label>Year</label>
                         <input type="number" id="refYear" placeholder="2026">
+                    </div>
+                </div>
+                <div class="input-box form-grid-full">
+                    <div class="input-icon">⏲️</div>
+                    <div class="input-content">
+                        <label>Max KM / Target Mileage</label>
+                        <input type="number" id="refKm" placeholder="e.g. 20000">
                     </div>
                 </div>
             </div>
@@ -964,6 +971,66 @@
         <div id="referenceList" class="cars-list"></div>
     </div>
 
+    <!-- PAGE 4: MY CAPITAL & WALLET -->
+    <div id="tabCapital" class="tab-page">
+        <div class="hero-section">
+            <h1 class="hero-title">My <span>Capital</span></h1>
+            <p class="hero-subtitle">Manage total cash reserves and track vehicle purchase deductions.</p>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-card-icon" style="color:#a855f7;">💼</div>
+                <div class="summary-card-content">
+                    <span>Starting Capital</span>
+                    <strong id="displayStartingCapital" style="color:#a855f7;">$0</strong>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-icon" style="color:#4ade80;">💵</div>
+                <div class="summary-card-content">
+                    <span>Available Cash</span>
+                    <strong id="displayAvailableCapital" style="color:#4ade80;">$0</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="num-badge">1</div>
+                    <div class="section-header-title">Set / Add Total Funds</div>
+                </div>
+                <div class="section-icon">🏦</div>
+            </div>
+
+            <div class="input-box" style="margin-bottom: 12px;">
+                <div class="input-icon" style="color:#a855f7;">💵</div>
+                <div class="input-content">
+                    <label>Enter Capital Amount ($)</label>
+                    <input type="number" id="capitalInput" placeholder="e.g. 100000">
+                </div>
+            </div>
+
+            <button class="btn-add" onclick="updateCapital()" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);">
+                💾 Update Capital Funds
+            </button>
+        </div>
+
+        <!-- DEDUCTIONS SUMMARY CARD -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="num-badge" style="background:#3b82f6;">2</div>
+                    <div class="section-header-title">Capital Inventory Deductions</div>
+                </div>
+                <div class="section-icon">📊</div>
+            </div>
+
+            <div id="capitalDeductionsList" class="cars-list"></div>
+        </div>
+    </div>
+
 </div>
 
 <!-- BOTTOM NAVIGATION BAR -->
@@ -979,6 +1046,10 @@
     <div class="nav-item" id="navBtnReference" onclick="switchTab('reference')">
         <div class="nav-icon">🏷️</div>
         <div>Price Ref</div>
+    </div>
+    <div class="nav-item" id="navBtnCapital" onclick="switchTab('capital')">
+        <div class="nav-icon">💵</div>
+        <div>Capital</div>
     </div>
 </div>
 
@@ -1023,10 +1094,10 @@
     let cars = JSON.parse(localStorage.getItem('dealershipCarHub')) || [];
     let soldCars = JSON.parse(localStorage.getItem('dealershipSoldCars')) || [];
     let priceReferences = JSON.parse(localStorage.getItem('dealershipPriceReferences')) || [];
+    let startingCapital = parseFloat(localStorage.getItem('dealershipStartingCapital')) || 0;
     let activeCarToSell = null;
 
     window.onload = function() {
-        // Set today's default date for date sold
         document.getElementById('actualDateSold').valueAsDate = new Date();
 
         const draft = JSON.parse(localStorage.getItem('carDraftData')) || {};
@@ -1049,16 +1120,19 @@
         renderCars();
         renderSoldCars();
         renderReferenceList();
+        renderCapital();
     };
 
     function switchTab(tab) {
         document.getElementById('tabActive').classList.remove('active');
         document.getElementById('tabSold').classList.remove('active');
         document.getElementById('tabReference').classList.remove('active');
+        document.getElementById('tabCapital').classList.remove('active');
 
         document.getElementById('navBtnActive').classList.remove('active');
         document.getElementById('navBtnSold').classList.remove('active');
         document.getElementById('navBtnReference').classList.remove('active');
+        document.getElementById('navBtnCapital').classList.remove('active');
 
         if (tab === 'active') {
             document.getElementById('tabActive').classList.add('active');
@@ -1070,6 +1144,64 @@
             document.getElementById('tabReference').classList.add('active');
             document.getElementById('navBtnReference').classList.add('active');
             renderReferenceList();
+        } else if (tab === 'capital') {
+            document.getElementById('tabCapital').classList.add('active');
+            document.getElementById('navBtnCapital').classList.add('active');
+            renderCapital();
+        }
+    }
+
+    /* TAB 4: CAPITAL MANAGEMENT LOGIC */
+    function updateCapital() {
+        const val = parseFloat(document.getElementById('capitalInput').value) || 0;
+        if (val < 0) {
+            alert("Please enter a valid positive capital amount.");
+            return;
+        }
+        startingCapital = val;
+        localStorage.setItem('dealershipStartingCapital', startingCapital);
+        renderCapital();
+        alert("Capital updated successfully!");
+    }
+
+    function renderCapital() {
+        document.getElementById('displayStartingCapital').innerText = '$' + startingCapital.toLocaleString();
+        
+        let totalDeductions = 0;
+        const listContainer = document.getElementById('capitalDeductionsList');
+        if (listContainer) listContainer.innerHTML = '';
+
+        // Deduct cars currently bought in inventory
+        cars.forEach(car => {
+            if (car.dateBought) {
+                const cost = car.asking || car.target || 0;
+                totalDeductions += cost;
+
+                if (listContainer) {
+                    listContainer.innerHTML += `
+                        <div class="price-row" style="background:#070c18; border:1px solid #162238;">
+                            <div>
+                                <strong style="color:#fff;">${car.fullName}</strong>
+                                <div style="font-size:9px; color:#64748b;">Bought: ${car.dateBought}</div>
+                            </div>
+                            <div style="color:#f87171; font-weight:800;">-$${cost.toLocaleString()}</div>
+                        </div>
+                    `;
+                }
+            }
+        });
+
+        // Add profits/revenue returned from sold cars
+        let totalSoldRevenue = 0;
+        soldCars.forEach(car => {
+            totalSoldRevenue += (car.soldFor || 0);
+        });
+
+        const availableCapital = startingCapital - totalDeductions + totalSoldRevenue;
+        document.getElementById('displayAvailableCapital').innerText = '$' + availableCapital.toLocaleString();
+
+        if (listContainer && cars.filter(c => c.dateBought).length === 0) {
+            listContainer.innerHTML = '<p style="font-size:11px; color:#64748b; text-align:center; padding:10px 0;">No active bought car deductions yet.</p>';
         }
     }
 
@@ -1107,12 +1239,13 @@
         checkLiveReferenceMatch();
     }
 
-    /* TAB 1: LIVE MATCHING WITH TAB 3 REFERENCE DATABASE (KM IGNORED) */
+    /* TAB 1: LIVE MATCHING WITH TAB 3 REFERENCE DATABASE */
     function checkLiveReferenceMatch() {
         const brand = (document.getElementById('brand').value || '').trim().toUpperCase();
         const model = (document.getElementById('model').value || '').trim().toUpperCase();
         const trim = (document.getElementById('trim').value || '').trim().toUpperCase();
         const year = (document.getElementById('year').value || '').trim();
+        const km = parseFloat(document.getElementById('km').value) || 0;
         const condition = document.getElementById('condition').value;
         const warranty = document.getElementById('warranty').value;
         const turbo = document.getElementById('turbo').value;
@@ -1128,7 +1261,6 @@
             return;
         }
 
-        // Strict Match on Specs except KM
         const match = priceReferences.find(r => 
             r.brand === brand &&
             r.model === model &&
@@ -1143,23 +1275,32 @@
         box.style.display = 'block';
 
         if (match) {
-            if (asking <= match.goodPrice) {
+            const isPriceGood = asking <= match.goodPrice;
+            const isKmGood = match.km ? km <= match.km : true;
+
+            if (isPriceGood && isKmGood) {
                 box.style.background = 'rgba(34, 197, 94, 0.12)';
                 box.style.borderColor = 'rgba(34, 197, 94, 0.4)';
-                badge.innerHTML = '🟢 <span style="color:#4ade80;">GOOD PRICE TO BUY</span>';
-                text.innerHTML = `Asking price ($${asking.toLocaleString()}) is lower than or equal to your stored reference price ($${match.goodPrice.toLocaleString()}). Great deal!`;
+                badge.innerHTML = '🟢 <span style="color:#4ade80;">GREAT DEAL TO BUY</span>';
+                text.innerHTML = `Asking ($${asking.toLocaleString()}) ≤ reference target ($${match.goodPrice.toLocaleString()})` + 
+                    (match.km ? ` and ${km.toLocaleString()} KM ≤ max limit (${match.km.toLocaleString()} KM).` : '.');
+            } else if (isPriceGood && !isKmGood) {
+                box.style.background = 'rgba(234, 179, 8, 0.12)';
+                box.style.borderColor = 'rgba(234, 179, 8, 0.4)';
+                badge.innerHTML = '🟡 <span style="color:#facc15;">PRICE OK, BUT KM TOO HIGH</span>';
+                text.innerHTML = `Asking price is good ($${asking.toLocaleString()}), but KM (${km.toLocaleString()}) exceeds target maximum (${match.km.toLocaleString()} KM).`;
             } else {
                 const diff = asking - match.goodPrice;
                 box.style.background = 'rgba(239, 68, 68, 0.12)';
                 box.style.borderColor = 'rgba(239, 68, 68, 0.4)';
-                badge.innerHTML = '🔴 <span style="color:#f87171;">NOT A GOOD PRICE</span>';
-                text.innerHTML = `Asking price ($${asking.toLocaleString()}) exceeds your stored reference price ($${match.goodPrice.toLocaleString()}) by +$${diff.toLocaleString()}.`;
+                badge.innerHTML = '🔴 <span style="color:#f87171;">ABOVE REFERENCE TARGET PRICE</span>';
+                text.innerHTML = `Asking price ($${asking.toLocaleString()}) exceeds your stored target ($${match.goodPrice.toLocaleString()}) by +$${diff.toLocaleString()}.`;
             }
         } else {
             box.style.background = 'rgba(255, 255, 255, 0.03)';
             box.style.borderColor = '#162238';
             badge.innerHTML = '⚪ <span style="color:#94a3b8;">NO REFERENCE PRICE SET</span>';
-            text.innerHTML = `No matching configuration found in Tab 3 (Price Ref). Save a target price there to enable auto deal evaluation.`;
+            text.innerHTML = `No matching configuration found in Price Ref. Save target price & max KM there to evaluate automatically.`;
         }
     }
 
@@ -1209,6 +1350,7 @@
         localStorage.removeItem('carDraftData');
         updateLiveProfit();
         renderCars();
+        renderCapital();
     }
 
     function deleteCar(id) {
@@ -1216,6 +1358,7 @@
             cars = cars.filter(c => c.id !== id);
             localStorage.setItem('dealershipCarHub', JSON.stringify(cars));
             renderCars();
+            renderCapital();
         }
     }
 
@@ -1224,6 +1367,7 @@
             soldCars = soldCars.filter(c => c.id !== id);
             localStorage.setItem('dealershipSoldCars', JSON.stringify(soldCars));
             renderSoldCars();
+            renderCapital();
         }
     }
 
@@ -1233,6 +1377,7 @@
         const model = (document.getElementById('refModel').value || '').trim().toUpperCase();
         const trim = (document.getElementById('refTrim').value || '').trim().toUpperCase();
         const year = (document.getElementById('refYear').value || '').trim();
+        const km = parseFloat(document.getElementById('refKm').value) || 0;
         const condition = document.getElementById('refCondition').value;
         const warranty = document.getElementById('refWarranty').value;
         const turbo = document.getElementById('refTurbo').value;
@@ -1244,7 +1389,6 @@
             return;
         }
 
-        // Check if matching entry already exists (ignoring KM) and update or create
         const existingIndex = priceReferences.findIndex(r => 
             r.brand === brand &&
             r.model === model &&
@@ -1259,7 +1403,7 @@
         const newRef = {
             id: Date.now(),
             fullName: `${brand} ${model} ${year} ${trim}`.trim(),
-            brand, model, trim, year, condition, warranty, turbo, hybrid, goodPrice
+            brand, model, trim, year, km, condition, warranty, turbo, hybrid, goodPrice
         };
 
         if (existingIndex !== -1) {
@@ -1270,11 +1414,11 @@
 
         localStorage.setItem('dealershipPriceReferences', JSON.stringify(priceReferences));
 
-        // Reset Reference Form
         document.getElementById('refBrand').value = '';
         document.getElementById('refModel').value = '';
         document.getElementById('refTrim').value = '';
         document.getElementById('refYear').value = '';
+        document.getElementById('refKm').value = '';
         document.getElementById('refGoodPrice').value = '';
 
         renderReferenceList();
@@ -1304,12 +1448,15 @@
                     ? `<span class="badge badge-clean">Clean</span>`
                     : `<span class="badge badge-crashed">Crashed/Repaired</span>`;
 
+                const kmBadge = ref.km ? `<span class="badge">≤ ${ref.km.toLocaleString()} KM</span>` : `<span class="badge">Any KM</span>`;
+
                 const refHTML = `
                     <div class="car-card">
                         <div>
                             <div class="car-title">${ref.fullName}</div>
                             <div class="tags-container">
                                 ${condBadge}
+                                ${kmBadge}
                                 <span class="badge">${ref.warranty}</span>
                                 <span class="badge">${ref.turbo}</span>
                                 <span class="badge">${ref.hybrid}</span>
@@ -1372,13 +1519,13 @@
         soldCars.push(completedSale);
         localStorage.setItem('dealershipSoldCars', JSON.stringify(soldCars));
 
-        // Remove from Active Cars
         cars = cars.filter(c => c.id !== activeCarToSell.id);
         localStorage.setItem('dealershipCarHub', JSON.stringify(cars));
 
         closeSoldModal();
         renderCars();
         renderSoldCars();
+        renderCapital();
         switchTab('sold');
     }
 
@@ -1460,7 +1607,7 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
 
                         <div class="date-info-box">
                             <span>📅 Added: ${car.dateAdded || 'N/A'}</span>
-                            ${car.dateBought ? `<span>🛒 Bought: ${car.dateBought}</span>` : ''}
+                            ${car.dateBought ? `<span style="color:#a855f7;">🛒 Bought: ${car.dateBought} (Capital Deducted)</span>` : ''}
                         </div>
 
                         ${evaluationBadge}
@@ -1496,7 +1643,7 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
         let totalProfit = 0;
         let monthlyProfit = 0;
 
-        const currentMonth = new Date().toISOString().slice(0, 7); // "YYYY-MM"
+        const currentMonth = new Date().toISOString().slice(0, 7);
 
         soldCars.forEach(car => {
             const carProfit = car.profit || 0;
