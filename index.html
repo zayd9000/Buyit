@@ -16,7 +16,7 @@
         body {
             background-color: #040814;
             color: #f1f5f9;
-            padding: 16px 12px 40px;
+            padding: 16px 12px 90px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
@@ -34,7 +34,7 @@
         }
 
         .hero-title {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 900;
             line-height: 1.1;
             color: #ffffff;
@@ -42,7 +42,7 @@
 
         .hero-title span {
             color: #3b82f6;
-            display: block;
+            display: inline-block;
         }
 
         .hero-subtitle {
@@ -50,21 +50,6 @@
             color: #94a3b8;
             margin-top: 6px;
             font-weight: 500;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            color: #e2e8f0;
-            margin-top: 12px;
-            white-space: nowrap;
         }
 
         /* Card Panels */
@@ -93,20 +78,20 @@
         }
 
         .num-badge {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             background: #2563eb;
             color: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
         }
 
         .section-header-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
             color: #ffffff;
             letter-spacing: 0.8px;
@@ -148,15 +133,15 @@
         }
 
         .input-icon {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             background: #0f182e;
             border: 1px solid #1d2b47;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 13px;
             flex-shrink: 0;
             color: #60a5fa;
         }
@@ -273,7 +258,7 @@
         }
 
         .profit-amount {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 900;
             color: #4ade80;
             margin: 2px 0;
@@ -307,12 +292,7 @@
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
         }
 
-        .btn-add:hover {
-            opacity: 0.95;
-            transform: translateY(-1px);
-        }
-
-        /* Counters Bar */
+        /* Counters & Stats Bar */
         .summary-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -351,7 +331,7 @@
         }
 
         .summary-card-content strong {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 900;
             color: #2563eb;
         }
@@ -379,7 +359,7 @@
             top: 50%;
             transform: translateY(-50%);
             color: #64748b;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         /* Vehicle Cards List */
@@ -399,14 +379,8 @@
             gap: 10px;
         }
 
-        .car-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
         .car-title {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 800;
             color: #ffffff;
         }
@@ -419,9 +393,9 @@
         }
 
         .badge {
-            font-size: 9.5px;
+            font-size: 9px;
             font-weight: 700;
-            padding: 3px 7px;
+            padding: 3px 6px;
             border-radius: 6px;
             background: #070c18;
             color: #94a3b8;
@@ -438,7 +412,18 @@
             padding: 8px 10px;
             border-radius: 8px;
             border: 1px solid #162238;
-            font-size: 11px;
+            font-size: 10.5px;
+        }
+
+        .date-info-box {
+            font-size: 9.5px;
+            color: #64748b;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 6px 10px;
+            border-radius: 6px;
         }
 
         .price-badge {
@@ -465,7 +450,7 @@
             border: none;
             border-radius: 8px;
             padding: 9px;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 800;
             cursor: pointer;
             display: flex;
@@ -474,15 +459,40 @@
             gap: 6px;
         }
 
+        .btn-sell {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 9px 12px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
         .btn-delete {
             background: rgba(239, 68, 68, 0.12);
             border: 1px solid rgba(239, 68, 68, 0.3);
             color: #f87171;
             border-radius: 8px;
             padding: 9px 12px;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 800;
             cursor: pointer;
+        }
+
+        /* Sold Section Specials */
+        .sold-profit-badge {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #4ade80;
+            padding: 8px 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 800;
+            font-size: 12px;
         }
 
         .save-indicator {
@@ -501,202 +511,371 @@
         }
 
         .save-indicator.visible { opacity: 1; }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 520px;
+            background: rgba(7, 12, 24, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid #162035;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 45%;
+            padding: 6px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item.active {
+            color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 18px;
+        }
+
+        /* Modal Overlay for Sold Prompt */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(4, 8, 20, 0.85);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 16px;
+        }
+
+        .modal-card {
+            background: #0b1120;
+            border: 1px solid #162035;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .tab-page {
+            display: none;
+        }
+        .tab-page.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Hero Header (Without Image) -->
-    <div class="hero-section">
-        <h1 class="hero-title">Car Deal & <span>Profit Tracker</span></h1>
-        <p class="hero-subtitle">Track deals, evaluate profits, close smarter.</p>
-        <div class="hero-badge">
-            🚘 Toyota Land Cruiser 2026 GXR
+
+    <!-- PAGE 1: ACTIVE CARS HUB -->
+    <div id="tabActive" class="tab-page active">
+        <div class="hero-section">
+            <h1 class="hero-title">Car Deal & <span>Profit Tracker</span></h1>
+            <p class="hero-subtitle">Track active inventory, evaluate deals, close profits.</p>
         </div>
+
+        <!-- Main Entry Form -->
+        <div class="card">
+            <div class="save-indicator" id="saveIndicator">✓ Live Auto-Saved</div>
+
+            <!-- 1. VEHICLE DETAILS -->
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="num-badge">1</div>
+                    <div class="section-header-title">Vehicle Details</div>
+                </div>
+                <div class="section-icon">🚘</div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-box">
+                    <div class="input-icon">🛡️</div>
+                    <div class="input-content">
+                        <label>Brand</label>
+                        <input type="text" id="brand" placeholder="Toyota" oninput="autoSaveDraft()">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">🚗</div>
+                    <div class="input-content">
+                        <label>Model</label>
+                        <input type="text" id="model" placeholder="Land Cruiser" oninput="autoSaveDraft()">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">⭐</div>
+                    <div class="input-content">
+                        <label>Trim / Edition</label>
+                        <input type="text" id="trim" placeholder="GXR" oninput="autoSaveDraft()">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">📅</div>
+                    <div class="input-content">
+                        <label>Year</label>
+                        <input type="number" id="year" placeholder="2026" oninput="autoSaveDraft()">
+                    </div>
+                </div>
+                <div class="input-box form-grid-full">
+                    <div class="input-icon">⏲️</div>
+                    <div class="input-content">
+                        <label>KM / Mileage</label>
+                        <input type="number" id="km" placeholder="15000" oninput="autoSaveDraft()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. VEHICLE CONDITION -->
+            <div class="section-header" style="margin-top: 14px;">
+                <div class="section-header-left">
+                    <div class="num-badge">2</div>
+                    <div class="section-header-title">Vehicle Condition</div>
+                </div>
+                <div class="section-icon">📋</div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-box">
+                    <div class="input-icon" style="color:#4ade80;">🛡️</div>
+                    <div class="input-content">
+                        <label>Accident History</label>
+                        <select id="condition" onchange="autoSaveDraft()">
+                            <option value="Clean">Clean (No Crash)</option>
+                            <option value="Crashed / Repaired">Crashed / Repaired</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon" style="color:#4ade80;">✓</div>
+                    <div class="input-content">
+                        <label>Warranty Status</label>
+                        <select id="warranty" onchange="autoSaveDraft()">
+                            <option value="Under Warranty">Under Warranty</option>
+                            <option value="No Warranty">No Warranty</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon" style="color:#a855f7;">🌀</div>
+                    <div class="input-content">
+                        <label>Turbo Option</label>
+                        <select id="turbo" onchange="autoSaveDraft()">
+                            <option value="Turbo">Turbo</option>
+                            <option value="Non-Turbo">Non-Turbo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon" style="color:#eab308;">⛽</div>
+                    <div class="input-content">
+                        <label>Fuel Type</label>
+                        <select id="hybrid" onchange="autoSaveDraft()">
+                            <option value="Gasoline">Gasoline</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="Diesel">Diesel</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. PRICING & DATES -->
+            <div class="section-header" style="margin-top: 14px;">
+                <div class="section-header-left">
+                    <div class="num-badge">3</div>
+                    <div class="section-header-title">Pricing & Purchase Date</div>
+                </div>
+                <div class="section-icon">📈</div>
+            </div>
+
+            <div class="pricing-layout">
+                <div class="pricing-left-grid">
+                    <div class="pricing-subbox">
+                        <label>Asking Price</label>
+                        <input type="number" id="askingPrice" placeholder="65000" oninput="autoSaveDraft()">
+                    </div>
+                    <div class="pricing-subbox">
+                        <label style="color:#4ade80;">Market Price</label>
+                        <input type="number" id="marketPrice" style="color:#4ade80;" placeholder="72000" oninput="autoSaveDraft()">
+                    </div>
+                    <div class="pricing-subbox">
+                        <label style="color:#c084fc;">Target Buy</label>
+                        <input type="number" id="targetPrice" style="color:#c084fc;" placeholder="66000" oninput="autoSaveDraft()">
+                    </div>
+                </div>
+
+                <div class="profit-highlight-card">
+                    <span>Est. Profit</span>
+                    <div class="profit-amount" id="liveProfitDisplay">$0</div>
+                    <div class="profit-margin-badge" id="liveMarginDisplay">0.0% MARGIN</div>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-box form-grid-full">
+                    <div class="input-icon">📅</div>
+                    <div class="input-content">
+                        <label>Date Bought (Optional if not bought yet)</label>
+                        <input type="date" id="dateBought" onchange="autoSaveDraft()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-box" style="margin-bottom: 14px;">
+                <div class="input-icon">📝</div>
+                <div class="input-content">
+                    <label>Notes / Extra Details</label>
+                    <input type="text" id="notes" placeholder="First owner, full dealer service" oninput="autoSaveDraft()">
+                </div>
+            </div>
+
+            <button class="btn-add" onclick="addCar()">
+                💾 Save Vehicle to Active Hub
+            </button>
+        </div>
+
+        <!-- Summary Statistics -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-card-icon">🚘</div>
+                <div class="summary-card-content">
+                    <span>Active Inventory</span>
+                    <strong id="totalCount">0</strong>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-icon" style="color:#4ade80;">🏷️</div>
+                <div class="summary-card-content">
+                    <span>Good Buy Deals</span>
+                    <strong id="goodDealsCount" style="color: #4ade80;">0</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Input -->
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchBar" class="search-bar" placeholder="Search Active Inventory..." onkeyup="renderCars()">
+        </div>
+
+        <!-- Cars Output List -->
+        <div id="carsList" class="cars-list"></div>
     </div>
 
-    <!-- Main Entry Form -->
-    <div class="card">
-        <div class="save-indicator" id="saveIndicator">✓ Live Auto-Saved</div>
-
-        <!-- 1. VEHICLE DETAILS -->
-        <div class="section-header">
-            <div class="section-header-left">
-                <div class="num-badge">1</div>
-                <div class="section-header-title">Vehicle Details</div>
-            </div>
-            <div class="section-icon">🚘</div>
+    <!-- PAGE 2: CARS SOLD & LEDGER -->
+    <div id="tabSold" class="tab-page">
+        <div class="hero-section">
+            <h1 class="hero-title">Cars Sold & <span>Profit Ledger</span></h1>
+            <p class="hero-subtitle">Comprehensive record of completed car sales & net revenue.</p>
         </div>
 
-        <div class="form-grid">
-            <div class="input-box">
-                <div class="input-icon">🛡️</div>
-                <div class="input-content">
-                    <label>Brand</label>
-                    <input type="text" id="brand" placeholder="Toyota" oninput="autoSaveDraft()">
+        <!-- Sold Stats Dashboard -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-card-icon" style="color:#4ade80;">💰</div>
+                <div class="summary-card-content">
+                    <span>Total Lifetime Profit</span>
+                    <strong id="totalProfitDisplay" style="color:#4ade80;">$0</strong>
                 </div>
             </div>
-            <div class="input-box">
-                <div class="input-icon">🚗</div>
-                <div class="input-content">
-                    <label>Model</label>
-                    <input type="text" id="model" placeholder="Land Cruiser" oninput="autoSaveDraft()">
-                </div>
-            </div>
-            <div class="input-box">
-                <div class="input-icon">⭐</div>
-                <div class="input-content">
-                    <label>Trim / Edition</label>
-                    <input type="text" id="trim" placeholder="GXR" oninput="autoSaveDraft()">
-                </div>
-            </div>
-            <div class="input-box">
-                <div class="input-icon">📅</div>
-                <div class="input-content">
-                    <label>Year</label>
-                    <input type="number" id="year" placeholder="2026" oninput="autoSaveDraft()">
-                </div>
-            </div>
-            <div class="input-box form-grid-full">
-                <div class="input-icon">⏲️</div>
-                <div class="input-content">
-                    <label>KM / Mileage</label>
-                    <input type="number" id="km" placeholder="15000" oninput="autoSaveDraft()">
+            <div class="summary-card">
+                <div class="summary-card-icon" style="color:#60a5fa;">📅</div>
+                <div class="summary-card-content">
+                    <span>This Month Profit</span>
+                    <strong id="monthlyProfitDisplay" style="color:#60a5fa;">$0</strong>
                 </div>
             </div>
         </div>
 
-        <!-- 2. VEHICLE CONDITION -->
-        <div class="section-header" style="margin-top: 16px;">
-            <div class="section-header-left">
-                <div class="num-badge">2</div>
-                <div class="section-header-title">Vehicle Condition</div>
-            </div>
-            <div class="section-icon">📋</div>
+        <!-- Search Input for Sold Cars -->
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchSoldBar" class="search-bar" placeholder="Search Sold Vehicles..." onkeyup="renderSoldCars()">
         </div>
 
-        <div class="form-grid">
-            <div class="input-box">
-                <div class="input-icon" style="color:#4ade80;">🛡️</div>
-                <div class="input-content">
-                    <label>Accident History</label>
-                    <select id="condition" onchange="autoSaveDraft()">
-                        <option value="Clean">Clean (No Crash)</option>
-                        <option value="Crashed / Repaired">Crashed / Repaired</option>
-                    </select>
-                </div>
-            </div>
-            <div class="input-box">
-                <div class="input-icon" style="color:#4ade80;">✓</div>
-                <div class="input-content">
-                    <label>Warranty Status</label>
-                    <select id="warranty" onchange="autoSaveDraft()">
-                        <option value="Under Warranty">Under Warranty</option>
-                        <option value="No Warranty">No Warranty</option>
-                    </select>
-                </div>
-            </div>
-            <div class="input-box">
-                <div class="input-icon" style="color:#a855f7;">🌀</div>
-                <div class="input-content">
-                    <label>Turbo Option</label>
-                    <select id="turbo" onchange="autoSaveDraft()">
-                        <option value="Turbo">Turbo</option>
-                        <option value="Non-Turbo">Non-Turbo</option>
-                    </select>
-                </div>
-            </div>
-            <div class="input-box">
-                <div class="input-icon" style="color:#eab308;">⛽</div>
-                <div class="input-content">
-                    <label>Fuel / Engine Type</label>
-                    <select id="hybrid" onchange="autoSaveDraft()">
-                        <option value="Gasoline">Gasoline</option>
-                        <option value="Hybrid">Hybrid</option>
-                        <option value="Diesel">Diesel</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+        <!-- Sold Cars Output List -->
+        <div id="soldCarsList" class="cars-list"></div>
+    </div>
 
-        <!-- 3. PRICING & EVALUATION -->
-        <div class="section-header" style="margin-top: 16px;">
-            <div class="section-header-left">
-                <div class="num-badge">3</div>
-                <div class="section-header-title">Pricing & Evaluation (USD)</div>
-            </div>
-            <div class="section-icon">📈</div>
-        </div>
+</div>
 
-        <div class="pricing-layout">
-            <div class="pricing-left-grid">
-                <div class="pricing-subbox">
-                    <label>Asking Price</label>
-                    <input type="number" id="askingPrice" placeholder="65000" oninput="autoSaveDraft()">
-                </div>
-                <div class="pricing-subbox">
-                    <label style="color:#4ade80;">Market Price</label>
-                    <input type="number" id="marketPrice" style="color:#4ade80;" placeholder="72000" oninput="autoSaveDraft()">
-                </div>
-                <div class="pricing-subbox">
-                    <label style="color:#c084fc;">Target Buy</label>
-                    <input type="number" id="targetPrice" style="color:#c084fc;" placeholder="66000" oninput="autoSaveDraft()">
-                </div>
-            </div>
+<!-- BOTTOM NAVIGATION BAR -->
+<div class="bottom-nav">
+    <div class="nav-item active" id="navBtnActive" onclick="switchTab('active')">
+        <div class="nav-icon">🚘</div>
+        <div>Active Hub</div>
+    </div>
+    <div class="nav-item" id="navBtnSold" onclick="switchTab('sold')">
+        <div class="nav-icon">🤝</div>
+        <div>Cars Sold</div>
+    </div>
+</div>
 
-            <!-- Live Profit Calculation Preview -->
-            <div class="profit-highlight-card">
-                <span>Potential Profit</span>
-                <div class="profit-amount" id="liveProfitDisplay">$0</div>
-                <div class="profit-margin-badge" id="liveMarginDisplay">0.0% MARGIN</div>
-            </div>
-        </div>
+<!-- MARK AS SOLD MODAL -->
+<div class="modal-overlay" id="soldModal">
+    <div class="modal-card">
+        <h3 style="margin-bottom: 6px; font-size: 16px;">🤝 Complete Car Sale</h3>
+        <p style="font-size: 11px; color: #94a3b8; margin-bottom: 14px;" id="modalCarTitle">Toyota Land Cruiser</p>
 
-        <div class="input-box" style="margin-bottom: 14px;">
-            <div class="input-icon">📝</div>
+        <div class="input-box" style="margin-bottom: 10px;">
+            <div class="input-icon">💵</div>
             <div class="input-content">
-                <label>Notes / Extra Details</label>
-                <input type="text" id="notes" placeholder="First owner, full dealer service" oninput="autoSaveDraft()">
+                <label>Actual Bought For ($)</label>
+                <input type="number" id="actualBoughtPrice" placeholder="e.g. 60000">
             </div>
         </div>
 
-        <button class="btn-add" onclick="addCar()">
-            💾 Save Vehicle to Hub
-        </button>
-    </div>
-
-    <!-- Summary Statistics -->
-    <div class="summary-grid">
-        <div class="summary-card">
-            <div class="summary-card-icon">🚘</div>
-            <div class="summary-card-content">
-                <span>Vehicles Tracked</span>
-                <strong id="totalCount">0</strong>
+        <div class="input-box" style="margin-bottom: 10px;">
+            <div class="input-icon" style="color:#4ade80;">🏷️</div>
+            <div class="input-content">
+                <label>Actual Sold For ($)</label>
+                <input type="number" id="actualSoldPrice" placeholder="e.g. 65000">
             </div>
         </div>
-        <div class="summary-card">
-            <div class="summary-card-icon" style="color:#4ade80;">🏷️</div>
-            <div class="summary-card-content">
-                <span>Good Buy Deals</span>
-                <strong id="goodDealsCount" style="color: #4ade80;">0</strong>
+
+        <div class="input-box" style="margin-bottom: 16px;">
+            <div class="input-icon">📅</div>
+            <div class="input-content">
+                <label>Date Sold</label>
+                <input type="date" id="actualDateSold">
             </div>
         </div>
-    </div>
 
-    <!-- Search Input -->
-    <div class="search-container">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="searchBar" class="search-bar" placeholder="Search by Brand, Model, Trim, Year..." onkeyup="renderCars()">
+        <div style="display: flex; gap: 8px;">
+            <button class="btn-add" onclick="confirmMarkAsSold()" style="flex:1;">Confirm & Move to Sold</button>
+            <button class="btn-delete" onclick="closeSoldModal()" style="background:#162035; color:#94a3b8; border:none;">Cancel</button>
+        </div>
     </div>
-
-    <!-- Cars Output List -->
-    <div id="carsList" class="cars-list"></div>
 </div>
 
 <script>
     let cars = JSON.parse(localStorage.getItem('dealershipCarHub')) || [];
+    let soldCars = JSON.parse(localStorage.getItem('dealershipSoldCars')) || [];
+    let activeCarToSell = null;
 
     window.onload = function() {
+        // Set today's default date for date sold
+        document.getElementById('actualDateSold').valueAsDate = new Date();
+
         const draft = JSON.parse(localStorage.getItem('carDraftData')) || {};
         if (draft.brand) document.getElementById('brand').value = draft.brand;
         if (draft.model) document.getElementById('model').value = draft.model;
@@ -710,11 +889,27 @@
         if (draft.asking) document.getElementById('askingPrice').value = draft.asking;
         if (draft.market) document.getElementById('marketPrice').value = draft.market;
         if (draft.target) document.getElementById('targetPrice').value = draft.target;
+        if (draft.dateBought) document.getElementById('dateBought').value = draft.dateBought;
         if (draft.notes) document.getElementById('notes').value = draft.notes;
-        
+
         updateLiveProfit();
         renderCars();
+        renderSoldCars();
     };
+
+    function switchTab(tab) {
+        if (tab === 'active') {
+            document.getElementById('tabActive').classList.add('active');
+            document.getElementById('tabSold').classList.remove('active');
+            document.getElementById('navBtnActive').classList.add('active');
+            document.getElementById('navBtnSold').classList.remove('active');
+        } else {
+            document.getElementById('tabSold').classList.add('active');
+            document.getElementById('tabActive').classList.remove('active');
+            document.getElementById('navBtnSold').classList.add('active');
+            document.getElementById('navBtnActive').classList.remove('active');
+        }
+    }
 
     function autoSaveDraft() {
         const draft = {
@@ -730,6 +925,7 @@
             asking: document.getElementById('askingPrice').value,
             market: document.getElementById('marketPrice').value,
             target: document.getElementById('targetPrice').value,
+            dateBought: document.getElementById('dateBought').value,
             notes: document.getElementById('notes').value
         };
         localStorage.setItem('carDraftData', JSON.stringify(draft));
@@ -766,6 +962,7 @@
         const asking = parseFloat(document.getElementById('askingPrice').value) || 0;
         const market = parseFloat(document.getElementById('marketPrice').value) || 0;
         const target = parseFloat(document.getElementById('targetPrice').value) || 0;
+        const dateBought = document.getElementById('dateBought').value;
         const notes = document.getElementById('notes').value;
 
         if (!brand || !model) {
@@ -773,18 +970,21 @@
             return;
         }
 
+        const todayDate = new Date().toISOString().split('T')[0];
+
         const newCar = {
             id: Date.now(),
             fullName: `${brand} ${model} ${year} ${trim}`.trim(),
             brand, model, trim, year, km, condition, warranty, turbo, hybrid,
-            asking, market, target, notes
+            asking, market, target, dateBought,
+            dateAdded: todayDate,
+            notes
         };
 
         cars.push(newCar);
         localStorage.setItem('dealershipCarHub', JSON.stringify(cars));
-        
-        // Reset Inputs & Draft
-        document.querySelectorAll('input').forEach(i => i.value = '');
+
+        document.querySelectorAll('#tabActive input').forEach(i => i.value = '');
         document.getElementById('notes').value = '';
         localStorage.removeItem('carDraftData');
         updateLiveProfit();
@@ -799,15 +999,68 @@
         }
     }
 
+    function deleteSoldCar(id) {
+        if (confirm("Are you sure you want to delete this sale record?")) {
+            soldCars = soldCars.filter(c => c.id !== id);
+            localStorage.setItem('dealershipSoldCars', JSON.stringify(soldCars));
+            renderSoldCars();
+        }
+    }
+
+    /* SELL CAR MODAL LOGIC */
+    function openSoldModal(id) {
+        activeCarToSell = cars.find(c => c.id === id);
+        if (!activeCarToSell) return;
+
+        document.getElementById('modalCarTitle').innerText = activeCarToSell.fullName;
+        document.getElementById('actualBoughtPrice').value = activeCarToSell.asking || activeCarToSell.target || '';
+        document.getElementById('actualSoldPrice').value = activeCarToSell.market || '';
+        document.getElementById('soldModal').style.display = 'flex';
+    }
+
+    function closeSoldModal() {
+        document.getElementById('soldModal').style.display = 'none';
+        activeCarToSell = null;
+    }
+
+    function confirmMarkAsSold() {
+        if (!activeCarToSell) return;
+
+        const boughtFor = parseFloat(document.getElementById('actualBoughtPrice').value) || 0;
+        const soldFor = parseFloat(document.getElementById('actualSoldPrice').value) || 0;
+        const dateSold = document.getElementById('actualDateSold').value || new Date().toISOString().split('T')[0];
+        const profit = soldFor - boughtFor;
+
+        const completedSale = {
+            ...activeCarToSell,
+            boughtFor,
+            soldFor,
+            profit,
+            dateSold
+        };
+
+        soldCars.push(completedSale);
+        localStorage.setItem('dealershipSoldCars', JSON.stringify(soldCars));
+
+        // Remove from Active Cars
+        cars = cars.filter(c => c.id !== activeCarToSell.id);
+        localStorage.setItem('dealershipCarHub', JSON.stringify(cars));
+
+        closeSoldModal();
+        renderCars();
+        renderSoldCars();
+        switchTab('sold');
+    }
+
     function sendToWhatsApp(carJson) {
         const car = JSON.parse(decodeURIComponent(carJson));
-        
+
         let dealStatus = "";
         if (car.target > 0) {
             dealStatus = car.asking <= car.target ? "✅ GOOD BUY DEAL" : "❌ ABOVE TARGET";
         }
 
-        const text = 
+        const text =
 `🚗 *VEHICLE FOR SALE / DEAL*
 *${car.fullName}*
 
@@ -822,10 +1075,10 @@
 ${dealStatus ? `\n*Status:* ${dealStatus}` : ''}
 ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
 
-        const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-        window.open(url, '_blank');
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 
+    /* RENDER ACTIVE CARS */
     function renderCars() {
         const listContainer = document.getElementById('carsList');
         const search = document.getElementById('searchBar').value.toLowerCase();
@@ -835,7 +1088,7 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
         let goodDeals = 0;
 
         cars.forEach(car => {
-            if (car.fullName.toLowerCase().includes(search) || car.notes.toLowerCase().includes(search)) {
+            if (car.fullName.toLowerCase().includes(search) || (car.notes && car.notes.toLowerCase().includes(search))) {
                 totalDeals++;
 
                 let evaluationBadge = '';
@@ -850,24 +1103,22 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
                     }
                 }
 
-                const condBadge = car.condition === 'Clean' 
-                    ? `<span class="badge badge-clean">Clean</span>` 
+                const condBadge = car.condition === 'Clean'
+                    ? `<span class="badge badge-clean">Clean</span>`
                     : `<span class="badge badge-crashed">Crashed/Repaired</span>`;
 
                 const carJsonEncoded = encodeURIComponent(JSON.stringify(car));
 
                 const carHTML = `
                     <div class="car-card">
-                        <div class="car-header">
-                            <div>
-                                <div class="car-title">${car.fullName}</div>
-                                <div class="tags-container">
-                                    ${condBadge}
-                                    <span class="badge">${car.km.toLocaleString()} KM</span>
-                                    <span class="badge">${car.warranty}</span>
-                                    <span class="badge">${car.turbo}</span>
-                                    <span class="badge">${car.hybrid}</span>
-                                </div>
+                        <div>
+                            <div class="car-title">${car.fullName}</div>
+                            <div class="tags-container">
+                                ${condBadge}
+                                <span class="badge">${car.km.toLocaleString()} KM</span>
+                                <span class="badge">${car.warranty}</span>
+                                <span class="badge">${car.turbo}</span>
+                                <span class="badge">${car.hybrid}</span>
                             </div>
                         </div>
 
@@ -877,10 +1128,18 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
                             <div style="color:#c084fc;"><strong>Target:</strong> $${car.target.toLocaleString()}</div>
                         </div>
 
+                        <div class="date-info-box">
+                            <span>📅 Added: ${car.dateAdded || 'N/A'}</span>
+                            ${car.dateBought ? `<span>🛒 Bought: ${car.dateBought}</span>` : ''}
+                        </div>
+
                         ${evaluationBadge}
                         ${car.notes ? `<p style="font-size:10.5px; color:#94a3b8;">📝 Note: ${car.notes}</p>` : ''}
 
                         <div class="action-buttons">
+                            <button class="btn-sell" onclick="openSoldModal(${car.id})">
+                                🤝 Sell Vehicle
+                            </button>
                             <button class="btn-whatsapp" onclick="sendToWhatsApp('${carJsonEncoded}')">
                                 💬 WhatsApp
                             </button>
@@ -896,6 +1155,76 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
 
         document.getElementById('totalCount').innerText = totalDeals;
         document.getElementById('goodDealsCount').innerText = goodDeals;
+    }
+
+    /* RENDER SOLD CARS LEDGER */
+    function renderSoldCars() {
+        const listContainer = document.getElementById('soldCarsList');
+        const search = document.getElementById('searchSoldBar').value.toLowerCase();
+        listContainer.innerHTML = '';
+
+        let totalProfit = 0;
+        let monthlyProfit = 0;
+
+        const currentMonth = new Date().toISOString().slice(0, 7); // "YYYY-MM"
+
+        soldCars.forEach(car => {
+            const carProfit = car.profit || 0;
+            totalProfit += carProfit;
+
+            if (car.dateSold && car.dateSold.startsWith(currentMonth)) {
+                monthlyProfit += carProfit;
+            }
+
+            if (car.fullName.toLowerCase().includes(search) || (car.notes && car.notes.toLowerCase().includes(search))) {
+                const condBadge = car.condition === 'Clean'
+                    ? `<span class="badge badge-clean">Clean</span>`
+                    : `<span class="badge badge-crashed">Crashed/Repaired</span>`;
+
+                const profitColor = carProfit >= 0 ? '#4ade80' : '#f87171';
+
+                const carHTML = `
+                    <div class="car-card">
+                        <div>
+                            <div class="car-title">${car.fullName}</div>
+                            <div class="tags-container">
+                                ${condBadge}
+                                <span class="badge">${car.km.toLocaleString()} KM</span>
+                                <span class="badge">${car.warranty}</span>
+                            </div>
+                        </div>
+
+                        <div class="price-row">
+                            <div><strong>Bought For:</strong> $${(car.boughtFor || 0).toLocaleString()}</div>
+                            <div style="color:#4ade80;"><strong>Sold For:</strong> $${(car.soldFor || 0).toLocaleString()}</div>
+                        </div>
+
+                        <div class="sold-profit-badge">
+                            <span>NET PROFIT</span>
+                            <span style="color:${profitColor}; font-size:15px;">${carProfit >= 0 ? '+' : ''}$${carProfit.toLocaleString()}</span>
+                        </div>
+
+                        <div class="date-info-box">
+                            <span>📅 Added: ${car.dateAdded || 'N/A'}</span>
+                            ${car.dateBought ? `<span>🛒 Bought: ${car.dateBought}</span>` : ''}
+                            <span style="color:#3b82f6;">🤝 Sold: ${car.dateSold || 'N/A'}</span>
+                        </div>
+
+                        ${car.notes ? `<p style="font-size:10.5px; color:#94a3b8;">📝 Note: ${car.notes}</p>` : ''}
+
+                        <div class="action-buttons">
+                            <button class="btn-delete" style="width:100%;" onclick="deleteSoldCar(${car.id})">
+                                Delete Record
+                            </button>
+                        </div>
+                    </div>
+                `;
+                listContainer.innerHTML += carHTML;
+            }
+        });
+
+        document.getElementById('totalProfitDisplay').innerText = '$' + totalProfit.toLocaleString();
+        document.getElementById('monthlyProfitDisplay').innerText = '$' + monthlyProfit.toLocaleString();
     }
 </script>
 
