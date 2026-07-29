@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Car Deal & Profit Tracker</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -17,26 +16,27 @@
         body {
             background-color: #040814;
             color: #f1f5f9;
-            padding: 20px 14px 40px;
+            padding: 16px 12px 40px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 520px;
         }
 
         /* Hero Header Section */
         .hero-section {
             position: relative;
-            padding: 10px 0 25px;
+            padding: 10px 0 10px;
             margin-bottom: 10px;
         }
 
         .hero-title {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 900;
             line-height: 1.1;
             color: #ffffff;
@@ -48,9 +48,9 @@
         }
 
         .hero-subtitle {
-            font-size: 13px;
+            font-size: 12px;
             color: #94a3b8;
-            margin-top: 8px;
+            margin-top: 6px;
             font-weight: 500;
         }
 
@@ -58,30 +58,37 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 6px 14px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 5px 12px;
             border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: 700;
             color: #e2e8f0;
-            margin-top: 16px;
-            backdrop-filter: blur(10px);
+            margin-top: 12px;
+            white-space: nowrap;
+        }
+
+        .hero-car-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 10px 0 15px;
         }
 
         .hero-car-img {
-            width: 100%;
-            max-width: 380px;
-            display: block;
-            margin: -20px auto 10px auto;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
+            width: 90%;
+            max-width: 340px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 12px 20px rgba(0,0,0,0.7));
         }
 
         /* Card Panels */
         .card {
             background: #0b1120;
             border-radius: 18px;
-            padding: 20px;
+            padding: 16px;
             margin-bottom: 16px;
             border: 1px solid #162035;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -93,30 +100,30 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .section-header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .num-badge {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             background: #2563eb;
             color: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
         }
 
         .section-header-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
             color: #ffffff;
             letter-spacing: 0.8px;
@@ -124,7 +131,7 @@
         }
 
         .section-icon {
-            font-size: 18px;
+            font-size: 16px;
             opacity: 0.6;
         }
 
@@ -132,8 +139,8 @@
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .form-grid-full {
@@ -143,11 +150,12 @@
         .input-box {
             background: #070c18;
             border: 1px solid #162238;
-            border-radius: 14px;
-            padding: 10px 12px;
+            border-radius: 12px;
+            padding: 8px 10px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            min-width: 0; /* Prevents flex children overflow */
             transition: all 0.2s ease;
         }
 
@@ -157,15 +165,15 @@
         }
 
         .input-icon {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             background: #0f182e;
             border: 1px solid #1d2b47;
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 15px;
+            font-size: 14px;
             flex-shrink: 0;
             color: #60a5fa;
         }
@@ -174,25 +182,40 @@
             display: flex;
             flex-direction: column;
             width: 100%;
+            min-width: 0;
         }
 
         .input-content label {
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 800;
             color: #64748b;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
             margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .input-content input, .input-content select {
             background: transparent;
             border: none;
             color: #ffffff;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             width: 100%;
             outline: none;
+            padding: 0;
+            margin: 0;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .input-content select {
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .input-content select option {
@@ -203,39 +226,43 @@
         /* Live Profit Highlight Box */
         .pricing-layout {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
         .pricing-left-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
 
         .pricing-subbox {
             background: #070c18;
             border: 1px solid #162238;
-            border-radius: 12px;
-            padding: 10px 8px;
+            border-radius: 10px;
+            padding: 8px 4px;
             text-align: center;
+            min-width: 0;
         }
 
         .pricing-subbox label {
-            font-size: 8px;
+            font-size: 7.5px;
             font-weight: 800;
             color: #64748b;
             text-transform: uppercase;
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .pricing-subbox input {
             background: transparent;
             border: none;
             color: #60a5fa;
-            font-size: 13px;
+            font-size: 11.5px;
             font-weight: 800;
             text-align: center;
             width: 100%;
@@ -245,8 +272,8 @@
         .profit-highlight-card {
             background: rgba(34, 197, 94, 0.08);
             border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 14px;
-            padding: 10px;
+            border-radius: 12px;
+            padding: 6px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -255,33 +282,33 @@
         }
 
         .profit-highlight-card span {
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 800;
             color: #4ade80;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
         }
 
         .profit-amount {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 900;
             color: #4ade80;
-            margin: 4px 0;
+            margin: 2px 0;
         }
 
         .profit-margin-badge {
             background: rgba(34, 197, 94, 0.2);
             color: #4ade80;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 800;
-            padding: 2px 6px;
+            padding: 2px 5px;
             border-radius: 4px;
         }
 
         /* Main Save Button */
         .btn-add {
             width: 100%;
-            padding: 14px;
+            padding: 13px;
             background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             color: #ffffff;
             font-weight: 800;
@@ -289,7 +316,7 @@
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -306,34 +333,34 @@
         .summary-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 14px;
         }
 
         .summary-card {
             background: #0b1120;
             border: 1px solid #162035;
-            border-radius: 14px;
-            padding: 14px;
+            border-radius: 12px;
+            padding: 12px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .summary-card-icon {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             background: #0f182e;
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
             color: #2563eb;
         }
 
         .summary-card-content span {
-            font-size: 9px;
+            font-size: 8.5px;
             font-weight: 800;
             color: #64748b;
             text-transform: uppercase;
@@ -341,7 +368,7 @@
         }
 
         .summary-card-content strong {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
             color: #2563eb;
         }
@@ -349,7 +376,7 @@
         /* Search Bar */
         .search-container {
             position: relative;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .search-bar {
@@ -357,9 +384,9 @@
             background: #0b1120;
             border: 1px solid #162035;
             border-radius: 12px;
-            padding: 14px 14px 14px 42px;
+            padding: 12px 12px 12px 40px;
             color: #fff;
-            font-size: 13px;
+            font-size: 12px;
             outline: none;
         }
 
@@ -369,7 +396,7 @@
             top: 50%;
             transform: translateY(-50%);
             color: #64748b;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         /* Vehicle Cards List */
@@ -382,11 +409,11 @@
         .car-card {
             background: #0b1120;
             border-radius: 14px;
-            padding: 16px;
+            padding: 14px;
             border: 1px solid #162035;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .car-header {
@@ -396,7 +423,7 @@
         }
 
         .car-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 800;
             color: #ffffff;
         }
@@ -404,14 +431,14 @@
         .tags-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 6px;
+            gap: 5px;
+            margin-top: 5px;
         }
 
         .badge {
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 700;
-            padding: 4px 8px;
+            padding: 3px 7px;
             border-radius: 6px;
             background: #070c18;
             color: #94a3b8;
@@ -425,17 +452,17 @@
             display: flex;
             justify-content: space-between;
             background: #070c18;
-            padding: 10px 12px;
-            border-radius: 10px;
+            padding: 8px 10px;
+            border-radius: 8px;
             border: 1px solid #162238;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .price-badge {
             display: inline-block;
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 6px;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 800;
         }
 
@@ -445,7 +472,7 @@
         .action-buttons {
             display: flex;
             gap: 8px;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .btn-whatsapp {
@@ -454,8 +481,8 @@
             color: #ffffff;
             border: none;
             border-radius: 8px;
-            padding: 10px;
-            font-size: 12px;
+            padding: 9px;
+            font-size: 11.5px;
             font-weight: 800;
             cursor: pointer;
             display: flex;
@@ -469,17 +496,17 @@
             border: 1px solid rgba(239, 68, 68, 0.3);
             color: #f87171;
             border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 12px;
+            padding: 9px 12px;
+            font-size: 11.5px;
             font-weight: 800;
             cursor: pointer;
         }
 
         .save-indicator {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 10px;
+            top: 16px;
+            right: 16px;
+            font-size: 9px;
             font-weight: 800;
             color: #4ade80;
             background: rgba(34, 197, 94, 0.1);
@@ -501,9 +528,11 @@
         <h1 class="hero-title">Car Deal & <span>Profit Tracker</span></h1>
         <p class="hero-subtitle">Track deals, evaluate profits, close smarter.</p>
         <div class="hero-badge">
-            🚗 Toyota Land Cruiser 2026 GXR
+            🚘 Toyota Land Cruiser 2026 GXR
         </div>
-        <img class="hero-car-img" src="https://images.unsplash.com/photo-1594502184342-2e12f877aa73?auto=format&fit=crop&w=800&q=80" alt="Land Cruiser Preview" style="object-fit: contain; max-height: 180px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));">
+        <div class="hero-car-wrapper">
+            <img class="hero-car-img" src="https://pngimg.com/uploads/land_cruiser/land_cruiser_PNG47.png" alt="Toyota Land Cruiser">
+        </div>
     </div>
 
     <!-- Main Entry Form -->
@@ -516,7 +545,7 @@
                 <div class="num-badge">1</div>
                 <div class="section-header-title">Vehicle Details</div>
             </div>
-            <div class="section-icon">🚗</div>
+            <div class="section-icon">🚘</div>
         </div>
 
         <div class="form-grid">
@@ -528,7 +557,7 @@
                 </div>
             </div>
             <div class="input-box">
-                <div class="input-icon">🚘</div>
+                <div class="input-icon">🚗</div>
                 <div class="input-content">
                     <label>Model</label>
                     <input type="text" id="model" placeholder="Land Cruiser" oninput="autoSaveDraft()">
@@ -552,13 +581,13 @@
                 <div class="input-icon">⏲️</div>
                 <div class="input-content">
                     <label>KM / Mileage</label>
-                    <input type="number" id="km" placeholder="15,000 km" oninput="autoSaveDraft()">
+                    <input type="number" id="km" placeholder="15000" oninput="autoSaveDraft()">
                 </div>
             </div>
         </div>
 
         <!-- 2. VEHICLE CONDITION -->
-        <div class="section-header" style="margin-top: 20px;">
+        <div class="section-header" style="margin-top: 16px;">
             <div class="section-header-left">
                 <div class="num-badge">2</div>
                 <div class="section-header-title">Vehicle Condition</div>
@@ -611,7 +640,7 @@
         </div>
 
         <!-- 3. PRICING & EVALUATION -->
-        <div class="section-header" style="margin-top: 20px;">
+        <div class="section-header" style="margin-top: 16px;">
             <div class="section-header-left">
                 <div class="num-badge">3</div>
                 <div class="section-header-title">Pricing & Evaluation (USD)</div>
@@ -623,15 +652,15 @@
             <div class="pricing-left-grid">
                 <div class="pricing-subbox">
                     <label>Asking Price</label>
-                    <input type="number" id="askingPrice" placeholder="$65,000" oninput="autoSaveDraft()">
+                    <input type="number" id="askingPrice" placeholder="65000" oninput="autoSaveDraft()">
                 </div>
                 <div class="pricing-subbox">
                     <label style="color:#4ade80;">Market Price</label>
-                    <input type="number" id="marketPrice" style="color:#4ade80;" placeholder="$72,000" oninput="autoSaveDraft()">
+                    <input type="number" id="marketPrice" style="color:#4ade80;" placeholder="72000" oninput="autoSaveDraft()">
                 </div>
                 <div class="pricing-subbox">
                     <label style="color:#c084fc;">Target Buy</label>
-                    <input type="number" id="targetPrice" style="color:#c084fc;" placeholder="$66,000" oninput="autoSaveDraft()">
+                    <input type="number" id="targetPrice" style="color:#c084fc;" placeholder="66000" oninput="autoSaveDraft()">
                 </div>
             </div>
 
@@ -643,7 +672,7 @@
             </div>
         </div>
 
-        <div class="input-box" style="margin-bottom: 16px;">
+        <div class="input-box" style="margin-bottom: 14px;">
             <div class="input-icon">📝</div>
             <div class="input-content">
                 <label>Notes / Extra Details</label>
@@ -869,7 +898,7 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
                         </div>
 
                         ${evaluationBadge}
-                        ${car.notes ? `<p style="font-size:11px; color:#94a3b8;">📝 Note: ${car.notes}</p>` : ''}
+                        ${car.notes ? `<p style="font-size:10.5px; color:#94a3b8;">📝 Note: ${car.notes}</p>` : ''}
 
                         <div class="action-buttons">
                             <button class="btn-whatsapp" onclick="sendToWhatsApp('${carJsonEncoded}')">
@@ -892,4 +921,3 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
 
 </body>
 </html>
-
