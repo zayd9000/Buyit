@@ -1,10 +1,13 @@
+Here's my take: The previous response might have rendered as a code preview block or collapsed on your display, but the code is complete and fully functional.
+Here is the exact code in plain text blocks so you can easily copy and paste it into your index.html file without any missing parts or rendering issues.
+Complete Code (index.html)
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Deal & Profit Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Car Deal & Profit Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -14,9 +17,9 @@
         }
 
         body {
-            background-color: #090d16;
+            background-color: #040814;
             color: #f1f5f9;
-            padding: 24px 16px;
+            padding: 20px 14px 40px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
@@ -24,183 +27,380 @@
 
         .container {
             width: 100%;
-            max-width: 1100px;
+            max-width: 600px;
         }
 
-        .header-title {
-            text-align: center;
-            margin-bottom: 24px;
+        /* Hero Header Section */
+        .hero-section {
+            position: relative;
+            padding: 10px 0 25px;
+            margin-bottom: 10px;
         }
 
-        h1 {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hero-title {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.1;
+            color: #ffffff;
         }
 
+        .hero-title span {
+            color: #3b82f6;
+            display: block;
+        }
+
+        .hero-subtitle {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-top: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-car-img {
+            width: 100%;
+            max-width: 380px;
+            display: block;
+            margin: -20px auto 10px auto;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
+        }
+
+        /* Card Panels */
         .card {
-            background: #111827;
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
-            border: 1px solid #1e293b;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+            background: #0b1120;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #162035;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             position: relative;
         }
 
-        .section-title {
-            font-size: 12px;
-            font-weight: 800;
-            color: #38bdf8;
-            margin-bottom: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        /* Section Headers */
+        .section-header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .section-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .num-badge {
+            width: 28px;
+            height: 28px;
+            background: #2563eb;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .section-header-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .section-icon {
+            font-size: 18px;
+            opacity: 0.6;
+        }
+
+        /* Inputs & Grids */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .form-grid-full {
+            grid-column: span 2;
+        }
+
+        .input-box {
+            background: #070c18;
+            border: 1px solid #162238;
+            border-radius: 14px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .input-box:focus-within {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .input-icon {
+            width: 36px;
+            height: 36px;
+            background: #0f182e;
+            border: 1px solid #1d2b47;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+            color: #60a5fa;
+        }
+
+        .input-content {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .input-content label {
+            font-size: 9px;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .input-content input, .input-content select {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            width: 100%;
+            outline: none;
+        }
+
+        .input-content select option {
+            background: #0b1120;
+            color: #fff;
+        }
+
+        /* Live Profit Highlight Box */
+        .pricing-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .pricing-left-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 8px;
         }
 
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #1e293b;
+        .pricing-subbox {
+            background: #070c18;
+            border: 1px solid #162238;
+            border-radius: 12px;
+            padding: 10px 8px;
+            text-align: center;
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 14px;
-            margin-bottom: 18px;
+        .pricing-subbox label {
+            font-size: 8px;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
         }
 
-        .input-group {
+        .pricing-subbox input {
+            background: transparent;
+            border: none;
+            color: #60a5fa;
+            font-size: 13px;
+            font-weight: 800;
+            text-align: center;
+            width: 100%;
+            outline: none;
+        }
+
+        .profit-highlight-card {
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 14px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
 
-        .input-group label {
-            font-size: 11px;
-            font-weight: 700;
-            color: #94a3b8;
+        .profit-highlight-card span {
+            font-size: 9px;
+            font-weight: 800;
+            color: #4ade80;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        input, select {
-            padding: 12px 14px;
-            border-radius: 8px;
-            border: 1px solid #1f293d;
-            background-color: #0b0f19;
-            color: #fff;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s ease;
+        .profit-amount {
+            font-size: 18px;
+            font-weight: 900;
+            color: #4ade80;
+            margin: 4px 0;
         }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
-            background-color: #0f172a;
+        .profit-margin-badge {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
+        /* Main Save Button */
         .btn-add {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             color: #ffffff;
             font-weight: 800;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
-            margin-top: 10px;
             font-size: 14px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
         }
 
         .btn-add:hover {
+            opacity: 0.95;
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(56, 189, 248, 0.35);
+        }
+
+        /* Counters Bar */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .summary-card {
+            background: #0b1120;
+            border: 1px solid #162035;
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .summary-card-icon {
+            width: 40px;
+            height: 40px;
+            background: #0f182e;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #2563eb;
+        }
+
+        .summary-card-content span {
+            font-size: 9px;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .summary-card-content strong {
+            font-size: 20px;
+            font-weight: 900;
+            color: #2563eb;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-bottom: 16px;
         }
 
         .search-bar {
             width: 100%;
-            margin-bottom: 20px;
-            padding: 14px;
-            font-size: 14px;
-            border-radius: 10px;
-        }
-
-        .summary-bar {
-            display: flex;
-            justify-content: space-around;
-            background: #111827;
-            padding: 18px;
+            background: #0b1120;
+            border: 1px solid #162035;
             border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #1e293b;
+            padding: 14px 14px 14px 42px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
         }
 
-        .summary-item {
-            text-align: center;
-        }
-
-        .summary-item span {
-            display: block;
-            font-size: 11px;
-            font-weight: 700;
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
+            font-size: 16px;
         }
 
-        .summary-item strong {
-            font-size: 22px;
-            font-weight: 800;
-            color: #38bdf8;
-        }
-
+        /* Vehicle Cards List */
         .cars-list {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
         }
 
         .car-card {
-            background: #111827;
-            border-radius: 12px;
-            padding: 18px;
-            border: 1px solid #1e293b;
-            display: grid;
-            grid-template-columns: 2fr 1fr auto;
-            gap: 16px;
-            align-items: center;
-            transition: border-color 0.2s ease;
+            background: #0b1120;
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid #162035;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .car-card:hover {
-            border-color: #334155;
-        }
-
-        @media (max-width: 768px) {
-            .car-card {
-                grid-template-columns: 1fr;
-            }
+        .car-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
         }
 
         .car-title {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 800;
-            color: #fff;
-            margin-bottom: 8px;
+            color: #ffffff;
         }
 
         .tags-container {
@@ -211,95 +411,83 @@
         }
 
         .badge {
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 10px;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
             border-radius: 6px;
-            background: #0b0f19;
+            background: #070c18;
             color: #94a3b8;
-            border: 1px solid #1e293b;
+            border: 1px solid #162238;
         }
 
-        .badge-clean { border-color: rgba(34, 197, 94, 0.4); color: #4ade80; background: rgba(34, 197, 94, 0.05); }
-        .badge-crashed { border-color: rgba(239, 68, 68, 0.4); color: #f87171; background: rgba(239, 68, 68, 0.05); }
+        .badge-clean { border-color: rgba(34, 197, 94, 0.4); color: #4ade80; }
+        .badge-crashed { border-color: rgba(239, 68, 68, 0.4); color: #f87171; }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            background: #070c18;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #162238;
+            font-size: 12px;
+        }
 
         .price-badge {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 800;
-            margin-top: 10px;
-            letter-spacing: 0.3px;
         }
 
-        .tag-good {
-            background-color: rgba(34, 197, 94, 0.15);
-            color: #4ade80;
-            border: 1px solid #22c55e;
-        }
-
-        .tag-high {
-            background-color: rgba(239, 68, 68, 0.15);
-            color: #f87171;
-            border: 1px solid #ef4444;
-        }
+        .tag-good { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid #22c55e; }
+        .tag-high { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; }
 
         .action-buttons {
             display: flex;
             gap: 8px;
-            align-items: center;
+            margin-top: 4px;
         }
 
         .btn-whatsapp {
+            flex: 1;
             background: #25D366;
             color: #ffffff;
             border: none;
             border-radius: 8px;
-            padding: 10px 14px;
+            padding: 10px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
-            text-decoration: none;
-            transition: transform 0.2s, opacity 0.2s;
-        }
-
-        .btn-whatsapp:hover {
-            opacity: 0.95;
-            transform: translateY(-1px);
         }
 
         .btn-delete {
-            background-color: rgba(239, 68, 68, 0.12);
+            background: rgba(239, 68, 68, 0.12);
             border: 1px solid rgba(239, 68, 68, 0.3);
             color: #f87171;
             border-radius: 8px;
             padding: 10px 14px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-delete:hover {
-            background-color: #ef4444;
-            color: #fff;
         }
 
         .save-indicator {
             position: absolute;
             top: 20px;
-            right: 24px;
-            font-size: 11px;
-            font-weight: 700;
+            right: 20px;
+            font-size: 10px;
+            font-weight: 800;
             color: #4ade80;
             background: rgba(34, 197, 94, 0.1);
             border: 1px solid rgba(34, 197, 94, 0.3);
-            padding: 4px 10px;
-            border-radius: 20px;
+            padding: 3px 8px;
+            border-radius: 12px;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -310,117 +498,197 @@
 <body>
 
 <div class="container">
-    <div class="header-title">
-        <h1>Car Deal & Profit Tracker</h1>
+    <!-- Hero Header -->
+    <div class="hero-section">
+        <h1 class="hero-title">Car Deal & <span>Profit Tracker</span></h1>
+        <p class="hero-subtitle">Track deals, evaluate profits, close smarter.</p>
+        <div class="hero-badge">
+            🚗 Toyota Land Cruiser 2026 GXR
+        </div>
+        <img class="hero-car-img" src="https://images.unsplash.com/photo-1594502184342-2e12f877aa73?auto=format&fit=crop&w=800&q=80" alt="Land Cruiser Preview" style="object-fit: contain; max-height: 180px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));">
     </div>
 
-    <!-- Form Input Card -->
+    <!-- Main Entry Form -->
     <div class="card">
         <div class="save-indicator" id="saveIndicator">✓ Live Auto-Saved</div>
-        
-        <div class="section-title">1. Vehicle Details</div>
+
+        <!-- 1. VEHICLE DETAILS -->
+        <div class="section-header">
+            <div class="section-header-left">
+                <div class="num-badge">1</div>
+                <div class="section-header-title">Vehicle Details</div>
+            </div>
+            <div class="section-icon">🚗</div>
+        </div>
+
         <div class="form-grid">
-            <div class="input-group">
-                <label>Brand</label>
-                <input type="text" id="brand" placeholder="e.g. Toyota" oninput="autoSaveDraft()">
+            <div class="input-box">
+                <div class="input-icon">🛡️</div>
+                <div class="input-content">
+                    <label>Brand</label>
+                    <input type="text" id="brand" placeholder="Toyota" oninput="autoSaveDraft()">
+                </div>
             </div>
-            <div class="input-group">
-                <label>Model</label>
-                <input type="text" id="model" placeholder="e.g. Land Cruiser" oninput="autoSaveDraft()">
+            <div class="input-box">
+                <div class="input-icon">🚘</div>
+                <div class="input-content">
+                    <label>Model</label>
+                    <input type="text" id="model" placeholder="Land Cruiser" oninput="autoSaveDraft()">
+                </div>
             </div>
-            <div class="input-group">
-                <label>Trim / Edition</label>
-                <input type="text" id="trim" placeholder="e.g. GX.R LIMITED" oninput="autoSaveDraft()">
+            <div class="input-box">
+                <div class="input-icon">⭐</div>
+                <div class="input-content">
+                    <label>Trim / Edition</label>
+                    <input type="text" id="trim" placeholder="GXR" oninput="autoSaveDraft()">
+                </div>
             </div>
-            <div class="input-group">
-                <label>Year</label>
-                <input type="number" id="year" placeholder="2025" oninput="autoSaveDraft()">
+            <div class="input-box">
+                <div class="input-icon">📅</div>
+                <div class="input-content">
+                    <label>Year</label>
+                    <input type="number" id="year" placeholder="2026" oninput="autoSaveDraft()">
+                </div>
             </div>
-            <div class="input-group">
-                <label>KM / Mileage</label>
-                <input type="number" id="km" placeholder="e.g. 15000" oninput="autoSaveDraft()">
+            <div class="input-box form-grid-full">
+                <div class="input-icon">⏲️</div>
+                <div class="input-content">
+                    <label>KM / Mileage</label>
+                    <input type="number" id="km" placeholder="15,000 km" oninput="autoSaveDraft()">
+                </div>
             </div>
         </div>
 
-        <div class="section-title">2. Specs & Condition</div>
+        <!-- 2. VEHICLE CONDITION -->
+        <div class="section-header" style="margin-top: 20px;">
+            <div class="section-header-left">
+                <div class="num-badge">2</div>
+                <div class="section-header-title">Vehicle Condition</div>
+            </div>
+            <div class="section-icon">📋</div>
+        </div>
+
         <div class="form-grid">
-            <div class="input-group">
-                <label>Accident History</label>
-                <select id="condition" onchange="autoSaveDraft()">
-                    <option value="Clean">Clean (No Crash)</option>
-                    <option value="Crashed / Repaired">Crashed / Repaired</option>
-                </select>
+            <div class="input-box">
+                <div class="input-icon" style="color:#4ade80;">🛡️</div>
+                <div class="input-content">
+                    <label>Accident History</label>
+                    <select id="condition" onchange="autoSaveDraft()">
+                        <option value="Clean">Clean (No Crash)</option>
+                        <option value="Crashed / Repaired">Crashed / Repaired</option>
+                    </select>
+                </div>
             </div>
-            <div class="input-group">
-                <label>Warranty Status</label>
-                <select id="warranty" onchange="autoSaveDraft()">
-                    <option value="Under Warranty">Under Warranty</option>
-                    <option value="No Warranty">No Warranty</option>
-                </select>
+            <div class="input-box">
+                <div class="input-icon" style="color:#4ade80;">✓</div>
+                <div class="input-content">
+                    <label>Warranty Status</label>
+                    <select id="warranty" onchange="autoSaveDraft()">
+                        <option value="Under Warranty">Under Warranty</option>
+                        <option value="No Warranty">No Warranty</option>
+                    </select>
+                </div>
             </div>
-            <div class="input-group">
-                <label>Turbo Option</label>
-                <select id="turbo" onchange="autoSaveDraft()">
-                    <option value="Turbo">Turbo</option>
-                    <option value="Non-Turbo">Non-Turbo</option>
-                </select>
+            <div class="input-box">
+                <div class="input-icon" style="color:#a855f7;">🌀</div>
+                <div class="input-content">
+                    <label>Turbo Option</label>
+                    <select id="turbo" onchange="autoSaveDraft()">
+                        <option value="Turbo">Turbo</option>
+                        <option value="Non-Turbo">Non-Turbo</option>
+                    </select>
+                </div>
             </div>
-            <div class="input-group">
-                <label>Fuel / Engine Type</label>
-                <select id="hybrid" onchange="autoSaveDraft()">
-                    <option value="Gasoline">Gasoline</option>
-                    <option value="Hybrid">Hybrid</option>
-                    <option value="Diesel">Diesel</option>
-                </select>
+            <div class="input-box">
+                <div class="input-icon" style="color:#eab308;">⛽</div>
+                <div class="input-content">
+                    <label>Fuel / Engine Type</label>
+                    <select id="hybrid" onchange="autoSaveDraft()">
+                        <option value="Gasoline">Gasoline</option>
+                        <option value="Hybrid">Hybrid</option>
+                        <option value="Diesel">Diesel</option>
+                    </select>
+                </div>
             </div>
         </div>
 
-        <div class="section-title">3. Pricing & Evaluation ($ USD)</div>
-        <div class="form-grid">
-            <div class="input-group">
-                <label>Asking Price ($)</label>
-                <input type="number" id="askingPrice" placeholder="e.g. 65000" oninput="autoSaveDraft()">
+        <!-- 3. PRICING & EVALUATION -->
+        <div class="section-header" style="margin-top: 20px;">
+            <div class="section-header-left">
+                <div class="num-badge">3</div>
+                <div class="section-header-title">Pricing & Evaluation (USD)</div>
             </div>
-            <div class="input-group">
-                <label>Market Price ($)</label>
-                <input type="number" id="marketPrice" placeholder="e.g. 72000" oninput="autoSaveDraft()">
+            <div class="section-icon">📈</div>
+        </div>
+
+        <div class="pricing-layout">
+            <div class="pricing-left-grid">
+                <div class="pricing-subbox">
+                    <label>Asking Price</label>
+                    <input type="number" id="askingPrice" placeholder="$65,000" oninput="autoSaveDraft()">
+                </div>
+                <div class="pricing-subbox">
+                    <label style="color:#4ade80;">Market Price</label>
+                    <input type="number" id="marketPrice" style="color:#4ade80;" placeholder="$72,000" oninput="autoSaveDraft()">
+                </div>
+                <div class="pricing-subbox">
+                    <label style="color:#c084fc;">Target Buy</label>
+                    <input type="number" id="targetPrice" style="color:#c084fc;" placeholder="$66,000" oninput="autoSaveDraft()">
+                </div>
             </div>
-            <div class="input-group">
-                <label>Target Buy Price ($)</label>
-                <input type="number" id="targetPrice" placeholder="e.g. 66000" oninput="autoSaveDraft()">
+
+            <!-- Live Profit Calculation Preview -->
+            <div class="profit-highlight-card">
+                <span>Potential Profit</span>
+                <div class="profit-amount" id="liveProfitDisplay">$0</div>
+                <div class="profit-margin-badge" id="liveMarginDisplay">0.0% MARGIN</div>
             </div>
-            <div class="input-group">
+        </div>
+
+        <div class="input-box" style="margin-bottom: 16px;">
+            <div class="input-icon">📝</div>
+            <div class="input-content">
                 <label>Notes / Extra Details</label>
-                <input type="text" id="notes" placeholder="e.g. First owner, full dealer service" oninput="autoSaveDraft()">
+                <input type="text" id="notes" placeholder="First owner, full dealer service" oninput="autoSaveDraft()">
             </div>
         </div>
 
-        <button class="btn-add" onclick="addCar()">💾 Save Vehicle to Hub</button>
+        <button class="btn-add" onclick="addCar()">
+            💾 Save Vehicle to Hub
+        </button>
     </div>
 
-    <!-- Summary Bar -->
-    <div class="summary-bar">
-        <div class="summary-item">
-            <span>Vehicles Tracked</span>
-            <strong id="totalCount">0</strong>
+    <!-- Summary Statistics -->
+    <div class="summary-grid">
+        <div class="summary-card">
+            <div class="summary-card-icon">🚘</div>
+            <div class="summary-card-content">
+                <span>Vehicles Tracked</span>
+                <strong id="totalCount">0</strong>
+            </div>
         </div>
-        <div class="summary-item">
-            <span>Good Buy Deals</span>
-            <strong id="goodDealsCount" style="color: #4ade80;">0</strong>
+        <div class="summary-card">
+            <div class="summary-card-icon" style="color:#4ade80;">🏷️</div>
+            <div class="summary-card-content">
+                <span>Good Buy Deals</span>
+                <strong id="goodDealsCount" style="color: #4ade80;">0</strong>
+            </div>
         </div>
     </div>
 
-    <!-- Search -->
-    <input type="text" id="searchBar" class="search-bar" placeholder="Search by Brand, Model, Trim, Year..." onkeyup="renderCars()">
+    <!-- Search Input -->
+    <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchBar" class="search-bar" placeholder="Search by Brand, Model, Trim, Year..." onkeyup="renderCars()">
+    </div>
 
-    <!-- Car List Container -->
+    <!-- Cars Output List -->
     <div id="carsList" class="cars-list"></div>
 </div>
 
 <script>
     let cars = JSON.parse(localStorage.getItem('dealershipCarHub')) || [];
 
-    // Load saved form draft instantly on load
     window.onload = function() {
         const draft = JSON.parse(localStorage.getItem('carDraftData')) || {};
         if (draft.brand) document.getElementById('brand').value = draft.brand;
@@ -436,6 +704,8 @@
         if (draft.market) document.getElementById('marketPrice').value = draft.market;
         if (draft.target) document.getElementById('targetPrice').value = draft.target;
         if (draft.notes) document.getElementById('notes').value = draft.notes;
+        
+        updateLiveProfit();
         renderCars();
     };
 
@@ -456,7 +726,18 @@
             notes: document.getElementById('notes').value
         };
         localStorage.setItem('carDraftData', JSON.stringify(draft));
+        updateLiveProfit();
         showSaveIndicator();
+    }
+
+    function updateLiveProfit() {
+        const asking = parseFloat(document.getElementById('askingPrice').value) || 0;
+        const market = parseFloat(document.getElementById('marketPrice').value) || 0;
+        const profit = market > asking ? market - asking : 0;
+        const margin = asking > 0 ? ((profit / asking) * 100).toFixed(1) : 0;
+
+        document.getElementById('liveProfitDisplay').innerText = '$' + profit.toLocaleString();
+        document.getElementById('liveMarginDisplay').innerText = margin + '% MARGIN';
     }
 
     function showSaveIndicator() {
@@ -499,6 +780,7 @@
         document.querySelectorAll('input').forEach(i => i.value = '');
         document.getElementById('notes').value = '';
         localStorage.removeItem('carDraftData');
+        updateLiveProfit();
         renderCars();
     }
 
@@ -569,26 +851,31 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
 
                 const carHTML = `
                     <div class="car-card">
-                        <div>
-                            <div class="car-title">${car.fullName}</div>
-                            <div class="tags-container">
-                                ${condBadge}
-                                <span class="badge">${car.km.toLocaleString()} KM</span>
-                                <span class="badge">${car.warranty}</span>
-                                <span class="badge">${car.turbo}</span>
-                                <span class="badge">${car.hybrid}</span>
+                        <div class="car-header">
+                            <div>
+                                <div class="car-title">${car.fullName}</div>
+                                <div class="tags-container">
+                                    ${condBadge}
+                                    <span class="badge">${car.km.toLocaleString()} KM</span>
+                                    <span class="badge">${car.warranty}</span>
+                                    <span class="badge">${car.turbo}</span>
+                                    <span class="badge">${car.hybrid}</span>
+                                </div>
                             </div>
-                            ${evaluationBadge}
-                            ${car.notes ? `<p style="font-size:11px; color:#94a3b8; margin-top:8px;">Note: ${car.notes}</p>` : ''}
                         </div>
-                        <div style="text-align: right; font-size: 13px; display:flex; flex-direction:column; gap:3px;">
-                            <p><strong>Asking:</strong> $${car.asking.toLocaleString()}</p>
-                            <p style="color:#94a3b8;"><strong>Market:</strong> $${car.market.toLocaleString()}</p>
-                            <p style="color:#38bdf8;"><strong>Target:</strong> $${car.target.toLocaleString()}</p>
+
+                        <div class="price-row">
+                            <div><strong>Asking:</strong> $${car.asking.toLocaleString()}</div>
+                            <div style="color:#4ade80;"><strong>Market:</strong> $${car.market.toLocaleString()}</div>
+                            <div style="color:#c084fc;"><strong>Target:</strong> $${car.target.toLocaleString()}</div>
                         </div>
+
+                        ${evaluationBadge}
+                        ${car.notes ? `<p style="font-size:11px; color:#94a3b8;">📝 Note: ${car.notes}</p>` : ''}
+
                         <div class="action-buttons">
                             <button class="btn-whatsapp" onclick="sendToWhatsApp('${carJsonEncoded}')">
-                                WhatsApp
+                                💬 WhatsApp
                             </button>
                             <button class="btn-delete" onclick="deleteCar(${car.id})">
                                 Delete
@@ -607,3 +894,4 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
 
 </body>
 </html>
+
