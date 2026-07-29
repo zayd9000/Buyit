@@ -273,6 +273,33 @@
             border-radius: 4px;
         }
 
+        /* Live Reference Evaluator Box */
+        .live-reference-card {
+            display: none;
+            margin-bottom: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #162238;
+            transition: all 0.2s ease;
+        }
+
+        .live-reference-header {
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .live-reference-detail {
+            font-size: 10px;
+            color: #94a3b8;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
         /* Main Save Button */
         .btn-add {
             width: 100%;
@@ -538,7 +565,7 @@
             font-size: 10px;
             font-weight: 800;
             cursor: pointer;
-            width: 45%;
+            width: 30%;
             padding: 6px;
             border-radius: 10px;
             transition: all 0.2s ease;
@@ -730,6 +757,12 @@
                 </div>
             </div>
 
+            <!-- Live Reference Deal Evaluator Box -->
+            <div id="liveReferenceBox" class="live-reference-card">
+                <div id="liveReferenceBadge" class="live-reference-header"></div>
+                <div id="liveReferenceText" class="live-reference-detail"></div>
+            </div>
+
             <div class="form-grid">
                 <div class="input-box form-grid-full">
                     <div class="input-icon">📅</div>
@@ -816,6 +849,121 @@
         <div id="soldCarsList" class="cars-list"></div>
     </div>
 
+    <!-- PAGE 3: PRICE REFERENCE DATABASE -->
+    <div id="tabReference" class="tab-page">
+        <div class="hero-section">
+            <h1 class="hero-title">Price <span>Reference</span></h1>
+            <p class="hero-subtitle">Set baseline "Good Buy" prices for vehicle configurations (KM ignored).</p>
+        </div>
+
+        <!-- Reference Input Form -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="num-badge">1</div>
+                    <div class="section-header-title">Vehicle Specs & Target Price</div>
+                </div>
+                <div class="section-icon">🏷️</div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-box">
+                    <div class="input-icon">🛡️</div>
+                    <div class="input-content">
+                        <label>Brand</label>
+                        <input type="text" id="refBrand" placeholder="Toyota">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">🚗</div>
+                    <div class="input-content">
+                        <label>Model</label>
+                        <input type="text" id="refModel" placeholder="Land Cruiser">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">⭐</div>
+                    <div class="input-content">
+                        <label>Trim / Edition</label>
+                        <input type="text" id="refTrim" placeholder="GXR">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">📅</div>
+                    <div class="input-content">
+                        <label>Year</label>
+                        <input type="number" id="refYear" placeholder="2026">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-box">
+                    <div class="input-icon" style="color:#4ade80;">🛡️</div>
+                    <div class="input-content">
+                        <label>Accident History</label>
+                        <select id="refCondition">
+                            <option value="Clean">Clean (No Crash)</option>
+                            <option value="Crashed / Repaired">Crashed / Repaired</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon" style="color:#4ade80;">✓</div>
+                    <div class="input-content">
+                        <label>Warranty Status</label>
+                        <select id="refWarranty">
+                            <option value="Under Warranty">Under Warranty</option>
+                            <option value="No Warranty">No Warranty</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon" style="color:#a855f7;">🌀</div>
+                    <div class="input-content">
+                        <label>Turbo Option</label>
+                        <select id="refTurbo">
+                            <option value="Turbo">Turbo</option>
+                            <option value="Non-Turbo">Non-Turbo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon" style="color:#eab308;">⛽</div>
+                    <div class="input-content">
+                        <label>Fuel Type</label>
+                        <select id="refHybrid">
+                            <option value="Gasoline">Gasoline</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="Diesel">Diesel</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-box" style="margin-bottom: 14px;">
+                <div class="input-icon" style="color:#4ade80;">🏷️</div>
+                <div class="input-content">
+                    <label>Good Price Target ($)</label>
+                    <input type="number" id="refGoodPrice" placeholder="e.g. 66000">
+                </div>
+            </div>
+
+            <button class="btn-add" onclick="savePriceReference()">
+                💾 Save Reference Price
+            </button>
+        </div>
+
+        <!-- Reference Search Bar -->
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchReferenceBar" class="search-bar" placeholder="Search Reference Database..." onkeyup="renderReferenceList()">
+        </div>
+
+        <!-- Reference List Output -->
+        <div id="referenceList" class="cars-list"></div>
+    </div>
+
 </div>
 
 <!-- BOTTOM NAVIGATION BAR -->
@@ -827,6 +975,10 @@
     <div class="nav-item" id="navBtnSold" onclick="switchTab('sold')">
         <div class="nav-icon">🤝</div>
         <div>Cars Sold</div>
+    </div>
+    <div class="nav-item" id="navBtnReference" onclick="switchTab('reference')">
+        <div class="nav-icon">🏷️</div>
+        <div>Price Ref</div>
     </div>
 </div>
 
@@ -870,6 +1022,7 @@
 <script>
     let cars = JSON.parse(localStorage.getItem('dealershipCarHub')) || [];
     let soldCars = JSON.parse(localStorage.getItem('dealershipSoldCars')) || [];
+    let priceReferences = JSON.parse(localStorage.getItem('dealershipPriceReferences')) || [];
     let activeCarToSell = null;
 
     window.onload = function() {
@@ -895,19 +1048,28 @@
         updateLiveProfit();
         renderCars();
         renderSoldCars();
+        renderReferenceList();
     };
 
     function switchTab(tab) {
+        document.getElementById('tabActive').classList.remove('active');
+        document.getElementById('tabSold').classList.remove('active');
+        document.getElementById('tabReference').classList.remove('active');
+
+        document.getElementById('navBtnActive').classList.remove('active');
+        document.getElementById('navBtnSold').classList.remove('active');
+        document.getElementById('navBtnReference').classList.remove('active');
+
         if (tab === 'active') {
             document.getElementById('tabActive').classList.add('active');
-            document.getElementById('tabSold').classList.remove('active');
             document.getElementById('navBtnActive').classList.add('active');
-            document.getElementById('navBtnSold').classList.remove('active');
-        } else {
+        } else if (tab === 'sold') {
             document.getElementById('tabSold').classList.add('active');
-            document.getElementById('tabActive').classList.remove('active');
             document.getElementById('navBtnSold').classList.add('active');
-            document.getElementById('navBtnActive').classList.remove('active');
+        } else if (tab === 'reference') {
+            document.getElementById('tabReference').classList.add('active');
+            document.getElementById('navBtnReference').classList.add('active');
+            renderReferenceList();
         }
     }
 
@@ -941,6 +1103,64 @@
 
         document.getElementById('liveProfitDisplay').innerText = '$' + profit.toLocaleString();
         document.getElementById('liveMarginDisplay').innerText = margin + '% MARGIN';
+
+        checkLiveReferenceMatch();
+    }
+
+    /* TAB 1: LIVE MATCHING WITH TAB 3 REFERENCE DATABASE (KM IGNORED) */
+    function checkLiveReferenceMatch() {
+        const brand = (document.getElementById('brand').value || '').trim().toUpperCase();
+        const model = (document.getElementById('model').value || '').trim().toUpperCase();
+        const trim = (document.getElementById('trim').value || '').trim().toUpperCase();
+        const year = (document.getElementById('year').value || '').trim();
+        const condition = document.getElementById('condition').value;
+        const warranty = document.getElementById('warranty').value;
+        const turbo = document.getElementById('turbo').value;
+        const hybrid = document.getElementById('hybrid').value;
+        const asking = parseFloat(document.getElementById('askingPrice').value) || 0;
+
+        const box = document.getElementById('liveReferenceBox');
+        const badge = document.getElementById('liveReferenceBadge');
+        const text = document.getElementById('liveReferenceText');
+
+        if (!brand || !model || !year || asking <= 0) {
+            box.style.display = 'none';
+            return;
+        }
+
+        // Strict Match on Specs except KM
+        const match = priceReferences.find(r => 
+            r.brand === brand &&
+            r.model === model &&
+            r.trim === trim &&
+            r.year === year &&
+            r.condition === condition &&
+            r.warranty === warranty &&
+            r.turbo === turbo &&
+            r.hybrid === hybrid
+        );
+
+        box.style.display = 'block';
+
+        if (match) {
+            if (asking <= match.goodPrice) {
+                box.style.background = 'rgba(34, 197, 94, 0.12)';
+                box.style.borderColor = 'rgba(34, 197, 94, 0.4)';
+                badge.innerHTML = '🟢 <span style="color:#4ade80;">GOOD PRICE TO BUY</span>';
+                text.innerHTML = `Asking price ($${asking.toLocaleString()}) is lower than or equal to your stored reference price ($${match.goodPrice.toLocaleString()}). Great deal!`;
+            } else {
+                const diff = asking - match.goodPrice;
+                box.style.background = 'rgba(239, 68, 68, 0.12)';
+                box.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+                badge.innerHTML = '🔴 <span style="color:#f87171;">NOT A GOOD PRICE</span>';
+                text.innerHTML = `Asking price ($${asking.toLocaleString()}) exceeds your stored reference price ($${match.goodPrice.toLocaleString()}) by +$${diff.toLocaleString()}.`;
+            }
+        } else {
+            box.style.background = 'rgba(255, 255, 255, 0.03)';
+            box.style.borderColor = '#162238';
+            badge.innerHTML = '⚪ <span style="color:#94a3b8;">NO REFERENCE PRICE SET</span>';
+            text.innerHTML = `No matching configuration found in Tab 3 (Price Ref). Save a target price there to enable auto deal evaluation.`;
+        }
     }
 
     function showSaveIndicator() {
@@ -1004,6 +1224,116 @@
             soldCars = soldCars.filter(c => c.id !== id);
             localStorage.setItem('dealershipSoldCars', JSON.stringify(soldCars));
             renderSoldCars();
+        }
+    }
+
+    /* TAB 3: PRICE REFERENCE DATABASE LOGIC */
+    function savePriceReference() {
+        const brand = (document.getElementById('refBrand').value || '').trim().toUpperCase();
+        const model = (document.getElementById('refModel').value || '').trim().toUpperCase();
+        const trim = (document.getElementById('refTrim').value || '').trim().toUpperCase();
+        const year = (document.getElementById('refYear').value || '').trim();
+        const condition = document.getElementById('refCondition').value;
+        const warranty = document.getElementById('refWarranty').value;
+        const turbo = document.getElementById('refTurbo').value;
+        const hybrid = document.getElementById('refHybrid').value;
+        const goodPrice = parseFloat(document.getElementById('refGoodPrice').value) || 0;
+
+        if (!brand || !model || !year || goodPrice <= 0) {
+            alert("Please complete Brand, Model, Year, and a valid Good Price Target.");
+            return;
+        }
+
+        // Check if matching entry already exists (ignoring KM) and update or create
+        const existingIndex = priceReferences.findIndex(r => 
+            r.brand === brand &&
+            r.model === model &&
+            r.trim === trim &&
+            r.year === year &&
+            r.condition === condition &&
+            r.warranty === warranty &&
+            r.turbo === turbo &&
+            r.hybrid === hybrid
+        );
+
+        const newRef = {
+            id: Date.now(),
+            fullName: `${brand} ${model} ${year} ${trim}`.trim(),
+            brand, model, trim, year, condition, warranty, turbo, hybrid, goodPrice
+        };
+
+        if (existingIndex !== -1) {
+            priceReferences[existingIndex] = newRef;
+        } else {
+            priceReferences.push(newRef);
+        }
+
+        localStorage.setItem('dealershipPriceReferences', JSON.stringify(priceReferences));
+
+        // Reset Reference Form
+        document.getElementById('refBrand').value = '';
+        document.getElementById('refModel').value = '';
+        document.getElementById('refTrim').value = '';
+        document.getElementById('refYear').value = '';
+        document.getElementById('refGoodPrice').value = '';
+
+        renderReferenceList();
+        updateLiveProfit();
+        alert("Reference Benchmark Price saved successfully!");
+    }
+
+    function deleteReference(id) {
+        if (confirm("Are you sure you want to delete this price reference?")) {
+            priceReferences = priceReferences.filter(r => r.id !== id);
+            localStorage.setItem('dealershipPriceReferences', JSON.stringify(priceReferences));
+            renderReferenceList();
+            updateLiveProfit();
+        }
+    }
+
+    function renderReferenceList() {
+        const listContainer = document.getElementById('referenceList');
+        if (!listContainer) return;
+
+        const search = (document.getElementById('searchReferenceBar')?.value || '').toLowerCase();
+        listContainer.innerHTML = '';
+
+        priceReferences.forEach(ref => {
+            if (ref.fullName.toLowerCase().includes(search)) {
+                const condBadge = ref.condition === 'Clean'
+                    ? `<span class="badge badge-clean">Clean</span>`
+                    : `<span class="badge badge-crashed">Crashed/Repaired</span>`;
+
+                const refHTML = `
+                    <div class="car-card">
+                        <div>
+                            <div class="car-title">${ref.fullName}</div>
+                            <div class="tags-container">
+                                ${condBadge}
+                                <span class="badge">${ref.warranty}</span>
+                                <span class="badge">${ref.turbo}</span>
+                                <span class="badge">${ref.hybrid}</span>
+                            </div>
+                        </div>
+
+                        <div class="price-row" style="background: rgba(34, 197, 94, 0.08); border-color: rgba(34, 197, 94, 0.3);">
+                            <div style="color:#4ade80;"><strong>Target Good Buy Price:</strong></div>
+                            <div style="color:#4ade80; font-weight:900; font-size:13px;">$${ref.goodPrice.toLocaleString()}</div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn-delete" style="width:100%;" onclick="deleteReference(${ref.id})">
+                                Delete Reference
+                            </button>
+                        </div>
+                    </div>
+                `;
+                listContainer.innerHTML += refHTML;
+            }
+        });
+
+        if (priceReferences.length === 0) {
+            listContainer.innerHTML = '<p style="font-size:12px; color:#64748b; text-align:center; padding:20px 0;">No reference prices stored yet.</p>';
         }
     }
 
