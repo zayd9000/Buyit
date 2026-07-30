@@ -462,7 +462,7 @@
         }
 
         .tag-good { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid #22c55e; }
-        .tag-high { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; }
+        .tag-high { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444; }
 
         .action-buttons {
             display: flex;
@@ -562,10 +562,10 @@
             align-items: center;
             gap: 4px;
             color: #64748b;
-            font-size: 9.5px;
+            font-size: 9px;
             font-weight: 800;
             cursor: pointer;
-            width: 23%;
+            width: 19%;
             padding: 6px 2px;
             border-radius: 10px;
             transition: all 0.2s ease;
@@ -577,7 +577,7 @@
         }
 
         .nav-icon {
-            font-size: 17px;
+            font-size: 16px;
         }
 
         /* Modal Overlay for Sold Prompt */
@@ -1031,6 +1031,103 @@
         </div>
     </div>
 
+    <!-- PAGE 5: DIRECT BUY & SELL (NEW 5TH TAB) -->
+    <div id="tabQuickTrade" class="tab-page">
+        <div class="hero-section">
+            <h1 class="hero-title">Quick <span>Buy & Sell</span></h1>
+            <p class="hero-subtitle">Simple purchase price & selling price entry without market estimates.</p>
+        </div>
+
+        <div class="card">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="num-badge" style="background:#f59e0b;">1</div>
+                    <div class="section-header-title">Direct Car Pricing</div>
+                </div>
+                <div class="section-icon">⚡</div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-box">
+                    <div class="input-icon">🛡️</div>
+                    <div class="input-content">
+                        <label>Brand</label>
+                        <input type="text" id="quickBrand" placeholder="Toyota">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">🚗</div>
+                    <div class="input-content">
+                        <label>Model</label>
+                        <input type="text" id="quickModel" placeholder="Hilux">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">⭐</div>
+                    <div class="input-content">
+                        <label>Trim / Edition</label>
+                        <input type="text" id="quickTrim" placeholder="Double Cab">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">📅</div>
+                    <div class="input-content">
+                        <label>Year</label>
+                        <input type="number" id="quickYear" placeholder="2026">
+                    </div>
+                </div>
+            </div>
+
+            <div class="pricing-layout" style="grid-template-columns: 2fr 1fr; margin-top:10px;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                    <div class="pricing-subbox">
+                        <label style="color:#f87171;">Buy Price ($)</label>
+                        <input type="number" id="quickBuyPrice" style="color:#f87171;" placeholder="30000" oninput="calculateQuickProfit()">
+                    </div>
+                    <div class="pricing-subbox">
+                        <label style="color:#4ade80;">Sell Price ($)</label>
+                        <input type="number" id="quickSellPrice" style="color:#4ade80;" placeholder="35000" oninput="calculateQuickProfit()">
+                    </div>
+                </div>
+
+                <div class="profit-highlight-card">
+                    <span>Target Profit</span>
+                    <div class="profit-amount" id="quickProfitDisplay">$0</div>
+                    <div class="profit-margin-badge" id="quickMarginDisplay">0.0%</div>
+                </div>
+            </div>
+
+            <div class="form-grid" style="margin-top:10px;">
+                <div class="input-box form-grid-full">
+                    <div class="input-icon">📅</div>
+                    <div class="input-content">
+                        <label>Date Bought (Auto-Deducts Capital)</label>
+                        <input type="date" id="quickDateBought">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-box" style="margin-bottom: 14px;">
+                <div class="input-icon">📝</div>
+                <div class="input-content">
+                    <label>Notes / Extra Details</label>
+                    <input type="text" id="quickNotes" placeholder="Clean title, direct trade">
+                </div>
+            </div>
+
+            <button class="btn-add" onclick="addQuickCar()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                💾 Save Quick Deal
+            </button>
+        </div>
+
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchQuickBar" class="search-bar" placeholder="Search Quick Buy & Sell..." onkeyup="renderQuickCars()">
+        </div>
+
+        <div id="quickCarsList" class="cars-list"></div>
+    </div>
+
 </div>
 
 <!-- BOTTOM NAVIGATION BAR -->
@@ -1038,6 +1135,10 @@
     <div class="nav-item active" id="navBtnActive" onclick="switchTab('active')">
         <div class="nav-icon">🚘</div>
         <div>Active Hub</div>
+    </div>
+    <div class="nav-item" id="navBtnQuickTrade" onclick="switchTab('quickTrade')">
+        <div class="nav-icon">⚡</div>
+        <div>Quick Trade</div>
     </div>
     <div class="nav-item" id="navBtnSold" onclick="switchTab('sold')">
         <div class="nav-icon">🤝</div>
@@ -1092,6 +1193,7 @@
 
 <script>
     let cars = JSON.parse(localStorage.getItem('dealershipCarHub')) || [];
+    let quickCars = JSON.parse(localStorage.getItem('dealershipQuickCars')) || [];
     let soldCars = JSON.parse(localStorage.getItem('dealershipSoldCars')) || [];
     let priceReferences = JSON.parse(localStorage.getItem('dealershipPriceReferences')) || [];
     let startingCapital = parseFloat(localStorage.getItem('dealershipStartingCapital')) || 0;
@@ -1118,6 +1220,7 @@
 
         updateLiveProfit();
         renderCars();
+        renderQuickCars();
         renderSoldCars();
         renderReferenceList();
         renderCapital();
@@ -1125,11 +1228,13 @@
 
     function switchTab(tab) {
         document.getElementById('tabActive').classList.remove('active');
+        document.getElementById('tabQuickTrade').classList.remove('active');
         document.getElementById('tabSold').classList.remove('active');
         document.getElementById('tabReference').classList.remove('active');
         document.getElementById('tabCapital').classList.remove('active');
 
         document.getElementById('navBtnActive').classList.remove('active');
+        document.getElementById('navBtnQuickTrade').classList.remove('active');
         document.getElementById('navBtnSold').classList.remove('active');
         document.getElementById('navBtnReference').classList.remove('active');
         document.getElementById('navBtnCapital').classList.remove('active');
@@ -1137,6 +1242,10 @@
         if (tab === 'active') {
             document.getElementById('tabActive').classList.add('active');
             document.getElementById('navBtnActive').classList.add('active');
+        } else if (tab === 'quickTrade') {
+            document.getElementById('tabQuickTrade').classList.add('active');
+            document.getElementById('navBtnQuickTrade').classList.add('active');
+            renderQuickCars();
         } else if (tab === 'sold') {
             document.getElementById('tabSold').classList.add('active');
             document.getElementById('navBtnSold').classList.add('active');
@@ -1149,6 +1258,132 @@
             document.getElementById('navBtnCapital').classList.add('active');
             renderCapital();
         }
+    }
+
+    /* TAB 5: QUICK BUY & SELL LOGIC */
+    function calculateQuickProfit() {
+        const buy = parseFloat(document.getElementById('quickBuyPrice').value) || 0;
+        const sell = parseFloat(document.getElementById('quickSellPrice').value) || 0;
+        const profit = sell > buy ? sell - buy : 0;
+        const margin = buy > 0 ? ((profit / buy) * 100).toFixed(1) : 0;
+
+        document.getElementById('quickProfitDisplay').innerText = '$' + profit.toLocaleString();
+        document.getElementById('quickMarginDisplay').innerText = margin + '% MARGIN';
+    }
+
+    function addQuickCar() {
+        const brand = document.getElementById('quickBrand').value.toUpperCase();
+        const model = document.getElementById('quickModel').value;
+        const trim = document.getElementById('quickTrim').value.toUpperCase();
+        const year = document.getElementById('quickYear').value;
+        const buyPrice = parseFloat(document.getElementById('quickBuyPrice').value) || 0;
+        const sellPrice = parseFloat(document.getElementById('quickSellPrice').value) || 0;
+        const dateBought = document.getElementById('quickDateBought').value;
+        const notes = document.getElementById('quickNotes').value;
+
+        if (!brand || !model || buyPrice <= 0) {
+            alert("Please enter Brand, Model, and Buy Price.");
+            return;
+        }
+
+        const todayDate = new Date().toISOString().split('T')[0];
+
+        const newCar = {
+            id: Date.now(),
+            fullName: `${brand} ${model} ${year} ${trim}`.trim(),
+            brand, model, trim, year,
+            asking: buyPrice,
+            market: sellPrice,
+            target: buyPrice,
+            dateBought,
+            dateAdded: todayDate,
+            notes,
+            isQuickTrade: true
+        };
+
+        quickCars.push(newCar);
+        localStorage.setItem('dealershipQuickCars', JSON.stringify(quickCars));
+
+        document.querySelectorAll('#tabQuickTrade input').forEach(i => i.value = '');
+        calculateQuickProfit();
+        renderQuickCars();
+        renderCapital();
+    }
+
+    function deleteQuickCar(id) {
+        if (confirm("Are you sure you want to delete this quick deal?")) {
+            quickCars = quickCars.filter(c => c.id !== id);
+            localStorage.setItem('dealershipQuickCars', JSON.stringify(quickCars));
+            renderQuickCars();
+            renderCapital();
+        }
+    }
+
+    function renderQuickCars() {
+        const listContainer = document.getElementById('quickCarsList');
+        if (!listContainer) return;
+
+        const search = (document.getElementById('searchQuickBar')?.value || '').toLowerCase();
+        listContainer.innerHTML = '';
+
+        quickCars.forEach(car => {
+            if (car.fullName.toLowerCase().includes(search) || (car.notes && car.notes.toLowerCase().includes(search))) {
+                const profit = car.market > car.asking ? car.market - car.asking : 0;
+                const carJsonEncoded = encodeURIComponent(JSON.stringify(car));
+
+                const carHTML = `
+                    <div class="car-card">
+                        <div>
+                            <div class="car-title">${car.fullName}</div>
+                            <div class="tags-container">
+                                <span class="badge" style="border-color:#f59e0b; color:#f59e0b;">Quick Trade</span>
+                            </div>
+                        </div>
+
+                        <div class="price-row">
+                            <div style="color:#f87171;"><strong>Buy Price:</strong> $${car.asking.toLocaleString()}</div>
+                            <div style="color:#4ade80;"><strong>Target Sell:</strong> $${car.market.toLocaleString()}</div>
+                        </div>
+
+                        <div class="price-badge tag-good">✓ EST. PROFIT: +$${profit.toLocaleString()}</div>
+
+                        <div class="date-info-box">
+                            <span>📅 Added: ${car.dateAdded || 'N/A'}</span>
+                            ${car.dateBought ? `<span style="color:#a855f7;">🛒 Bought: ${car.dateBought} (Capital Deducted)</span>` : ''}
+                        </div>
+
+                        ${car.notes ? `<p style="font-size:10.5px; color:#94a3b8;">📝 Note: ${car.notes}</p>` : ''}
+
+                        <div class="action-buttons">
+                            <button class="btn-sell" onclick="openSoldModalFromQuick(${car.id})">
+                                🤝 Mark as Sold
+                            </button>
+                            <button class="btn-whatsapp" onclick="sendToWhatsApp('${carJsonEncoded}')">
+                                💬 WhatsApp
+                            </button>
+                            <button class="btn-delete" onclick="deleteQuickCar(${car.id})">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+                listContainer.innerHTML += carHTML;
+            }
+        });
+
+        if (quickCars.length === 0) {
+            listContainer.innerHTML = '<p style="font-size:12px; color:#64748b; text-align:center; padding:20px 0;">No quick deals stored yet.</p>';
+        }
+    }
+
+    function openSoldModalFromQuick(id) {
+        activeCarToSell = quickCars.find(c => c.id === id);
+        if (!activeCarToSell) return;
+
+        document.getElementById('modalCarTitle').innerText = activeCarToSell.fullName;
+        document.getElementById('actualBoughtPrice').value = activeCarToSell.asking || '';
+        document.getElementById('actualSoldPrice').value = activeCarToSell.market || '';
+        document.getElementById('soldModal').style.display = 'flex';
     }
 
     /* TAB 4: CAPITAL MANAGEMENT LOGIC */
@@ -1171,7 +1406,7 @@
         const listContainer = document.getElementById('capitalDeductionsList');
         if (listContainer) listContainer.innerHTML = '';
 
-        // Deduct cars currently bought in inventory
+        // Deduct cars currently bought in inventory (Tab 1)
         cars.forEach(car => {
             if (car.dateBought) {
                 const cost = car.asking || car.target || 0;
@@ -1182,7 +1417,27 @@
                         <div class="price-row" style="background:#070c18; border:1px solid #162238;">
                             <div>
                                 <strong style="color:#fff;">${car.fullName}</strong>
-                                <div style="font-size:9px; color:#64748b;">Bought: ${car.dateBought}</div>
+                                <div style="font-size:9px; color:#64748b;">Bought: ${car.dateBought} (Active Hub)</div>
+                            </div>
+                            <div style="color:#f87171; font-weight:800;">-$${cost.toLocaleString()}</div>
+                        </div>
+                    `;
+                }
+            }
+        });
+
+        // Deduct quick trade cars bought (Tab 5)
+        quickCars.forEach(car => {
+            if (car.dateBought) {
+                const cost = car.asking || 0;
+                totalDeductions += cost;
+
+                if (listContainer) {
+                    listContainer.innerHTML += `
+                        <div class="price-row" style="background:#070c18; border:1px solid #162238;">
+                            <div>
+                                <strong style="color:#fff;">${car.fullName}</strong>
+                                <div style="font-size:9px; color:#f59e0b;">Bought: ${car.dateBought} (Quick Trade)</div>
                             </div>
                             <div style="color:#f87171; font-weight:800;">-$${cost.toLocaleString()}</div>
                         </div>
@@ -1200,7 +1455,7 @@
         const availableCapital = startingCapital - totalDeductions + totalSoldRevenue;
         document.getElementById('displayAvailableCapital').innerText = '$' + availableCapital.toLocaleString();
 
-        if (listContainer && cars.filter(c => c.dateBought).length === 0) {
+        if (listContainer && cars.filter(c => c.dateBought).length === 0 && quickCars.filter(c => c.dateBought).length === 0) {
             listContainer.innerHTML = '<p style="font-size:11px; color:#64748b; text-align:center; padding:10px 0;">No active bought car deductions yet.</p>';
         }
     }
@@ -1519,11 +1774,17 @@
         soldCars.push(completedSale);
         localStorage.setItem('dealershipSoldCars', JSON.stringify(soldCars));
 
-        cars = cars.filter(c => c.id !== activeCarToSell.id);
-        localStorage.setItem('dealershipCarHub', JSON.stringify(cars));
+        if (activeCarToSell.isQuickTrade) {
+            quickCars = quickCars.filter(c => c.id !== activeCarToSell.id);
+            localStorage.setItem('dealershipQuickCars', JSON.stringify(quickCars));
+            renderQuickCars();
+        } else {
+            cars = cars.filter(c => c.id !== activeCarToSell.id);
+            localStorage.setItem('dealershipCarHub', JSON.stringify(cars));
+            renderCars();
+        }
 
         closeSoldModal();
-        renderCars();
         renderSoldCars();
         renderCapital();
         switchTab('sold');
@@ -1541,14 +1802,13 @@
 `🚗 *VEHICLE FOR SALE / DEAL*
 *${car.fullName}*
 
-• *Condition:* ${car.condition}
-• *Mileage:* ${car.km.toLocaleString()} KM
-• *Warranty:* ${car.warranty}
-• *Engine:* ${car.turbo} | ${car.hybrid}
+${car.condition ? `• *Condition:* ${car.condition}` : ''}
+${car.km ? `• *Mileage:* ${car.km.toLocaleString()} KM` : ''}
+${car.warranty ? `• *Warranty:* ${car.warranty}` : ''}
+${car.turbo && car.hybrid ? `• *Engine:* ${car.turbo} | ${car.hybrid}` : ''}
 
-💵 *Asking Price:* $${car.asking.toLocaleString()}
-📈 *Market Price:* $${car.market.toLocaleString()}
-🎯 *Target Buy:* $${car.target.toLocaleString()}
+💵 *Buy/Asking Price:* $${car.asking.toLocaleString()}
+📈 *Target Selling Price:* $${car.market.toLocaleString()}
 ${dealStatus ? `\n*Status:* ${dealStatus}` : ''}
 ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
 
@@ -1665,9 +1925,9 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
                         <div>
                             <div class="car-title">${car.fullName}</div>
                             <div class="tags-container">
-                                ${condBadge}
-                                <span class="badge">${car.km.toLocaleString()} KM</span>
-                                <span class="badge">${car.warranty}</span>
+                                ${car.condition ? condBadge : ''}
+                                ${car.km ? `<span class="badge">${car.km.toLocaleString()} KM</span>` : ''}
+                                ${car.warranty ? `<span class="badge">${car.warranty}</span>` : ''}
                             </div>
                         </div>
 
