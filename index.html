@@ -205,6 +205,12 @@
             gap: 6px;
         }
 
+        .pricing-left-grid-two {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+        }
+
         .pricing-subbox {
             background: #070c18;
             border: 1px solid #162238;
@@ -814,14 +820,180 @@
         <div id="carsList" class="cars-list"></div>
     </div>
 
-    <!-- PAGE 2: CARS SOLD & LEDGER -->
+    <!-- PAGE 2: QUICK TRADE (EXACT MATCH OF TAB 1 WITH BUY/SELL PRICING ONLY) -->
+    <div id="tabQuickTrade" class="tab-page">
+        <div class="hero-section">
+            <h1 class="hero-title">Quick <span>Buy & Sell</span></h1>
+            <p class="hero-subtitle">Direct buy price & sell price tracking without market estimates.</p>
+        </div>
+
+        <div class="card">
+            <!-- 1. VEHICLE DETAILS -->
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="num-badge" style="background:#f59e0b;">1</div>
+                    <div class="section-header-title">Vehicle Details</div>
+                </div>
+                <div class="section-icon">🚘</div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-box">
+                    <div class="input-icon">🛡️</div>
+                    <div class="input-content">
+                        <label>Brand</label>
+                        <input type="text" id="quickBrand" placeholder="Toyota">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">🚗</div>
+                    <div class="input-content">
+                        <label>Model</label>
+                        <input type="text" id="quickModel" placeholder="Hilux">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">⭐</div>
+                    <div class="input-content">
+                        <label>Trim / Edition</label>
+                        <input type="text" id="quickTrim" placeholder="Double Cab 4x4">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon">📅</div>
+                    <div class="input-content">
+                        <label>Year</label>
+                        <input type="number" id="quickYear" placeholder="2026">
+                    </div>
+                </div>
+                <div class="input-box form-grid-full">
+                    <div class="input-icon">⏲️</div>
+                    <div class="input-content">
+                        <label>KM / Mileage</label>
+                        <input type="number" id="quickKm" placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. VEHICLE CONDITION -->
+            <div class="section-header" style="margin-top: 14px;">
+                <div class="section-header-left">
+                    <div class="num-badge" style="background:#f59e0b;">2</div>
+                    <div class="section-header-title">Vehicle Condition</div>
+                </div>
+                <div class="section-icon">📋</div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-box">
+                    <div class="input-icon" style="color:#4ade80;">🛡️</div>
+                    <div class="input-content">
+                        <label>Accident History</label>
+                        <select id="quickCondition">
+                            <option value="Clean">Clean (No Crash)</option>
+                            <option value="Crashed / Repaired">Crashed / Repaired</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon" style="color:#4ade80;">✓</div>
+                    <div class="input-content">
+                        <label>Warranty Status</label>
+                        <select id="quickWarranty">
+                            <option value="Under Warranty">Under Warranty</option>
+                            <option value="No Warranty" selected>No Warranty</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon" style="color:#a855f7;">🌀</div>
+                    <div class="input-content">
+                        <label>Turbo Option</label>
+                        <select id="quickTurbo">
+                            <option value="Turbo">Turbo</option>
+                            <option value="Non-Turbo" selected>Non-Turbo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-icon" style="color:#eab308;">⛽</div>
+                    <div class="input-content">
+                        <label>Fuel Type</label>
+                        <select id="quickHybrid">
+                            <option value="Gasoline">Gasoline</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="Diesel">Diesel</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. PRICING & PURCHASE DATE (BUY & SELL ONLY) -->
+            <div class="section-header" style="margin-top: 14px;">
+                <div class="section-header-left">
+                    <div class="num-badge" style="background:#f59e0b;">3</div>
+                    <div class="section-header-title">Pricing & Purchase Date</div>
+                </div>
+                <div class="section-icon">📈</div>
+            </div>
+
+            <div class="pricing-layout">
+                <div class="pricing-left-grid-two">
+                    <div class="pricing-subbox">
+                        <label style="color:#f87171;">Buy Price ($)</label>
+                        <input type="number" id="quickBuyPrice" style="color:#f87171;" placeholder="30000" oninput="calculateQuickProfit()">
+                    </div>
+                    <div class="pricing-subbox">
+                        <label style="color:#4ade80;">Sell Price ($)</label>
+                        <input type="number" id="quickSellPrice" style="color:#4ade80;" placeholder="35000" oninput="calculateQuickProfit()">
+                    </div>
+                </div>
+
+                <div class="profit-highlight-card">
+                    <span>Est. Profit</span>
+                    <div class="profit-amount" id="quickProfitDisplay">$0</div>
+                    <div class="profit-margin-badge" id="quickMarginDisplay">0.0% MARGIN</div>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-box form-grid-full">
+                    <div class="input-icon">📅</div>
+                    <div class="input-content">
+                        <label>Date Bought (Auto-Deducts Capital)</label>
+                        <input type="date" id="quickDateBought">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-box" style="margin-bottom: 14px;">
+                <div class="input-icon">📝</div>
+                <div class="input-content">
+                    <label>Notes / Extra Details</label>
+                    <input type="text" id="quickNotes" placeholder="Clean title, direct trade">
+                </div>
+            </div>
+
+            <button class="btn-add" onclick="addQuickCar()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                💾 Save Quick Deal
+            </button>
+        </div>
+
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchQuickBar" class="search-bar" placeholder="Search Quick Buy & Sell..." onkeyup="renderQuickCars()">
+        </div>
+
+        <div id="quickCarsList" class="cars-list"></div>
+    </div>
+
+    <!-- PAGE 3: CARS SOLD & LEDGER -->
     <div id="tabSold" class="tab-page">
         <div class="hero-section">
             <h1 class="hero-title">Cars Sold & <span>Profit Ledger</span></h1>
             <p class="hero-subtitle">Comprehensive record of completed car sales & net revenue.</p>
         </div>
 
-        <!-- Sold Stats Dashboard -->
         <div class="summary-grid">
             <div class="summary-card">
                 <div class="summary-card-icon" style="color:#4ade80;">💰</div>
@@ -839,24 +1011,21 @@
             </div>
         </div>
 
-        <!-- Search Input for Sold Cars -->
         <div class="search-container">
             <span class="search-icon">🔍</span>
             <input type="text" id="searchSoldBar" class="search-bar" placeholder="Search Sold Vehicles..." onkeyup="renderSoldCars()">
         </div>
 
-        <!-- Sold Cars Output List -->
         <div id="soldCarsList" class="cars-list"></div>
     </div>
 
-    <!-- PAGE 3: PRICE REFERENCE DATABASE -->
+    <!-- PAGE 4: PRICE REFERENCE DATABASE -->
     <div id="tabReference" class="tab-page">
         <div class="hero-section">
             <h1 class="hero-title">Price <span>Reference</span></h1>
             <p class="hero-subtitle">Set baseline "Good Buy" prices & target mileage for vehicle configurations.</p>
         </div>
 
-        <!-- Reference Input Form -->
         <div class="card">
             <div class="section-header">
                 <div class="section-header-left">
@@ -961,17 +1130,15 @@
             </button>
         </div>
 
-        <!-- Reference Search Bar -->
         <div class="search-container">
             <span class="search-icon">🔍</span>
             <input type="text" id="searchReferenceBar" class="search-bar" placeholder="Search Reference Database..." onkeyup="renderReferenceList()">
         </div>
 
-        <!-- Reference List Output -->
         <div id="referenceList" class="cars-list"></div>
     </div>
 
-    <!-- PAGE 4: MY CAPITAL & WALLET -->
+    <!-- PAGE 5: MY CAPITAL & WALLET -->
     <div id="tabCapital" class="tab-page">
         <div class="hero-section">
             <h1 class="hero-title">My <span>Capital</span></h1>
@@ -998,7 +1165,7 @@
         <div class="card">
             <div class="section-header">
                 <div class="section-header-left">
-                    <div class="num-badge">1</div>
+                    <div class="num-badge" style="background:#a855f7;">1</div>
                     <div class="section-header-title">Set / Add Total Funds</div>
                 </div>
                 <div class="section-icon">🏦</div>
@@ -1017,7 +1184,6 @@
             </button>
         </div>
 
-        <!-- DEDUCTIONS SUMMARY CARD -->
         <div class="card">
             <div class="section-header">
                 <div class="section-header-left">
@@ -1029,103 +1195,6 @@
 
             <div id="capitalDeductionsList" class="cars-list"></div>
         </div>
-    </div>
-
-    <!-- PAGE 5: DIRECT BUY & SELL (NEW 5TH TAB) -->
-    <div id="tabQuickTrade" class="tab-page">
-        <div class="hero-section">
-            <h1 class="hero-title">Quick <span>Buy & Sell</span></h1>
-            <p class="hero-subtitle">Simple purchase price & selling price entry without market estimates.</p>
-        </div>
-
-        <div class="card">
-            <div class="section-header">
-                <div class="section-header-left">
-                    <div class="num-badge" style="background:#f59e0b;">1</div>
-                    <div class="section-header-title">Direct Car Pricing</div>
-                </div>
-                <div class="section-icon">⚡</div>
-            </div>
-
-            <div class="form-grid">
-                <div class="input-box">
-                    <div class="input-icon">🛡️</div>
-                    <div class="input-content">
-                        <label>Brand</label>
-                        <input type="text" id="quickBrand" placeholder="Toyota">
-                    </div>
-                </div>
-                <div class="input-box">
-                    <div class="input-icon">🚗</div>
-                    <div class="input-content">
-                        <label>Model</label>
-                        <input type="text" id="quickModel" placeholder="Hilux">
-                    </div>
-                </div>
-                <div class="input-box">
-                    <div class="input-icon">⭐</div>
-                    <div class="input-content">
-                        <label>Trim / Edition</label>
-                        <input type="text" id="quickTrim" placeholder="Double Cab">
-                    </div>
-                </div>
-                <div class="input-box">
-                    <div class="input-icon">📅</div>
-                    <div class="input-content">
-                        <label>Year</label>
-                        <input type="number" id="quickYear" placeholder="2026">
-                    </div>
-                </div>
-            </div>
-
-            <div class="pricing-layout" style="grid-template-columns: 2fr 1fr; margin-top:10px;">
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                    <div class="pricing-subbox">
-                        <label style="color:#f87171;">Buy Price ($)</label>
-                        <input type="number" id="quickBuyPrice" style="color:#f87171;" placeholder="30000" oninput="calculateQuickProfit()">
-                    </div>
-                    <div class="pricing-subbox">
-                        <label style="color:#4ade80;">Sell Price ($)</label>
-                        <input type="number" id="quickSellPrice" style="color:#4ade80;" placeholder="35000" oninput="calculateQuickProfit()">
-                    </div>
-                </div>
-
-                <div class="profit-highlight-card">
-                    <span>Target Profit</span>
-                    <div class="profit-amount" id="quickProfitDisplay">$0</div>
-                    <div class="profit-margin-badge" id="quickMarginDisplay">0.0%</div>
-                </div>
-            </div>
-
-            <div class="form-grid" style="margin-top:10px;">
-                <div class="input-box form-grid-full">
-                    <div class="input-icon">📅</div>
-                    <div class="input-content">
-                        <label>Date Bought (Auto-Deducts Capital)</label>
-                        <input type="date" id="quickDateBought">
-                    </div>
-                </div>
-            </div>
-
-            <div class="input-box" style="margin-bottom: 14px;">
-                <div class="input-icon">📝</div>
-                <div class="input-content">
-                    <label>Notes / Extra Details</label>
-                    <input type="text" id="quickNotes" placeholder="Clean title, direct trade">
-                </div>
-            </div>
-
-            <button class="btn-add" onclick="addQuickCar()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
-                💾 Save Quick Deal
-            </button>
-        </div>
-
-        <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="searchQuickBar" class="search-bar" placeholder="Search Quick Buy & Sell..." onkeyup="renderQuickCars()">
-        </div>
-
-        <div id="quickCarsList" class="cars-list"></div>
     </div>
 
 </div>
@@ -1260,7 +1329,7 @@
         }
     }
 
-    /* TAB 5: QUICK BUY & SELL LOGIC */
+    /* TAB 2: QUICK TRADE LOGIC */
     function calculateQuickProfit() {
         const buy = parseFloat(document.getElementById('quickBuyPrice').value) || 0;
         const sell = parseFloat(document.getElementById('quickSellPrice').value) || 0;
@@ -1276,6 +1345,11 @@
         const model = document.getElementById('quickModel').value;
         const trim = document.getElementById('quickTrim').value.toUpperCase();
         const year = document.getElementById('quickYear').value;
+        const km = parseFloat(document.getElementById('quickKm').value) || 0;
+        const condition = document.getElementById('quickCondition').value;
+        const warranty = document.getElementById('quickWarranty').value;
+        const turbo = document.getElementById('quickTurbo').value;
+        const hybrid = document.getElementById('quickHybrid').value;
         const buyPrice = parseFloat(document.getElementById('quickBuyPrice').value) || 0;
         const sellPrice = parseFloat(document.getElementById('quickSellPrice').value) || 0;
         const dateBought = document.getElementById('quickDateBought').value;
@@ -1291,7 +1365,7 @@
         const newCar = {
             id: Date.now(),
             fullName: `${brand} ${model} ${year} ${trim}`.trim(),
-            brand, model, trim, year,
+            brand, model, trim, year, km, condition, warranty, turbo, hybrid,
             asking: buyPrice,
             market: sellPrice,
             target: buyPrice,
@@ -1331,12 +1405,21 @@
                 const profit = car.market > car.asking ? car.market - car.asking : 0;
                 const carJsonEncoded = encodeURIComponent(JSON.stringify(car));
 
+                const condBadge = car.condition === 'Clean'
+                    ? `<span class="badge badge-clean">Clean</span>`
+                    : `<span class="badge badge-crashed">Crashed/Repaired</span>`;
+
                 const carHTML = `
                     <div class="car-card">
                         <div>
                             <div class="car-title">${car.fullName}</div>
                             <div class="tags-container">
                                 <span class="badge" style="border-color:#f59e0b; color:#f59e0b;">Quick Trade</span>
+                                ${condBadge}
+                                <span class="badge">${car.km.toLocaleString()} KM</span>
+                                <span class="badge">${car.warranty}</span>
+                                <span class="badge">${car.turbo}</span>
+                                <span class="badge">${car.hybrid}</span>
                             </div>
                         </div>
 
@@ -1386,7 +1469,7 @@
         document.getElementById('soldModal').style.display = 'flex';
     }
 
-    /* TAB 4: CAPITAL MANAGEMENT LOGIC */
+    /* CAPITAL MANAGEMENT LOGIC */
     function updateCapital() {
         const val = parseFloat(document.getElementById('capitalInput').value) || 0;
         if (val < 0) {
@@ -1406,7 +1489,6 @@
         const listContainer = document.getElementById('capitalDeductionsList');
         if (listContainer) listContainer.innerHTML = '';
 
-        // Deduct cars currently bought in inventory (Tab 1)
         cars.forEach(car => {
             if (car.dateBought) {
                 const cost = car.asking || car.target || 0;
@@ -1426,7 +1508,6 @@
             }
         });
 
-        // Deduct quick trade cars bought (Tab 5)
         quickCars.forEach(car => {
             if (car.dateBought) {
                 const cost = car.asking || 0;
@@ -1446,7 +1527,6 @@
             }
         });
 
-        // Add profits/revenue returned from sold cars
         let totalSoldRevenue = 0;
         soldCars.forEach(car => {
             totalSoldRevenue += (car.soldFor || 0);
@@ -1494,7 +1574,6 @@
         checkLiveReferenceMatch();
     }
 
-    /* TAB 1: LIVE MATCHING WITH TAB 3 REFERENCE DATABASE */
     function checkLiveReferenceMatch() {
         const brand = (document.getElementById('brand').value || '').trim().toUpperCase();
         const model = (document.getElementById('model').value || '').trim().toUpperCase();
@@ -1626,7 +1705,6 @@
         }
     }
 
-    /* TAB 3: PRICE REFERENCE DATABASE LOGIC */
     function savePriceReference() {
         const brand = (document.getElementById('refBrand').value || '').trim().toUpperCase();
         const model = (document.getElementById('refModel').value || '').trim().toUpperCase();
@@ -1739,7 +1817,6 @@
         }
     }
 
-    /* SELL CAR MODAL LOGIC */
     function openSoldModal(id) {
         activeCarToSell = cars.find(c => c.id === id);
         if (!activeCarToSell) return;
@@ -1815,7 +1892,6 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 
-    /* RENDER ACTIVE CARS */
     function renderCars() {
         const listContainer = document.getElementById('carsList');
         const search = document.getElementById('searchBar').value.toLowerCase();
@@ -1894,7 +1970,6 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
         document.getElementById('goodDealsCount').innerText = goodDeals;
     }
 
-    /* RENDER SOLD CARS LEDGER */
     function renderSoldCars() {
         const listContainer = document.getElementById('soldCarsList');
         const search = document.getElementById('searchSoldBar').value.toLowerCase();
