@@ -933,14 +933,14 @@
                     <div class="input-icon" style="color:#f87171;">💵</div>
                     <div class="input-content">
                         <label style="color:#f87171;">Bought Price ($)</label>
-                        <input type="number" id="quickBuyPrice" placeholder="30000" oninput="calcQuickProfit()">
+                        <input type="number" id="quickBuyPrice" placeholder="30000">
                     </div>
                 </div>
                 <div class="input-box">
                     <div class="input-icon" style="color:#4ade80;">🏷️</div>
                     <div class="input-content">
                         <label style="color:#4ade80;">Sell Price ($)</label>
-                        <input type="number" id="quickSellPrice" placeholder="35000" oninput="calcQuickProfit()">
+                        <input type="number" id="quickSellPrice" placeholder="35000">
                     </div>
                 </div>
                 <div class="input-box form-grid-full">
@@ -1466,6 +1466,7 @@
         if (tab === 'active') {
             document.getElementById('tabActive').classList.add('active');
             document.getElementById('navBtnActive').classList.add('active');
+            renderCars();
         } else if (tab === 'quickTrade') {
             document.getElementById('tabQuickTrade').classList.add('active');
             document.getElementById('navBtnQuickTrade').classList.add('active');
@@ -1473,6 +1474,7 @@
         } else if (tab === 'sold') {
             document.getElementById('tabSold').classList.add('active');
             document.getElementById('navBtnSold').classList.add('active');
+            renderSoldCars();
         } else if (tab === 'reference') {
             document.getElementById('tabReference').classList.add('active');
             document.getElementById('navBtnReference').classList.add('active');
@@ -1490,9 +1492,9 @@
 
     /* TAB 6: MARKET SIGHTINGS LOGIC */
     function addSightingCar() {
-        const brand = document.getElementById('sightBrand').value.toUpperCase();
-        const model = document.getElementById('sightModel').value;
-        const trim = document.getElementById('sightTrim').value.toUpperCase();
+        const brand = document.getElementById('sightBrand').value.toUpperCase().trim();
+        const model = document.getElementById('sightModel').value.trim();
+        const trim = document.getElementById('sightTrim').value.toUpperCase().trim();
         const year = document.getElementById('sightYear').value;
         const km = parseFloat(document.getElementById('sightKm').value) || 0;
         const condition = document.getElementById('sightCondition').value;
@@ -1622,9 +1624,9 @@
 
     /* TAB 2: QUICK TRADE LOGIC */
     function addQuickCar() {
-        const brand = document.getElementById('quickBrand').value.toUpperCase();
-        const model = document.getElementById('quickModel').value;
-        const trim = document.getElementById('quickTrim').value.toUpperCase();
+        const brand = document.getElementById('quickBrand').value.toUpperCase().trim();
+        const model = document.getElementById('quickModel').value.trim();
+        const trim = document.getElementById('quickTrim').value.toUpperCase().trim();
         const year = document.getElementById('quickYear').value;
         const km = parseFloat(document.getElementById('quickKm').value) || 0;
         const condition = document.getElementById('quickCondition').value;
@@ -1922,9 +1924,9 @@
     }
 
     function addCar() {
-        const brand = document.getElementById('brand').value.toUpperCase();
-        const model = document.getElementById('model').value;
-        const trim = document.getElementById('trim').value.toUpperCase();
+        const brand = document.getElementById('brand').value.toUpperCase().trim();
+        const model = document.getElementById('model').value.trim();
+        const trim = document.getElementById('trim').value.toUpperCase().trim();
         const year = document.getElementById('year').value;
         const km = parseFloat(document.getElementById('km').value) || 0;
         const condition = document.getElementById('condition').value;
