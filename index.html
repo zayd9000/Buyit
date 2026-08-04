@@ -497,6 +497,17 @@
             cursor: pointer;
         }
 
+        .btn-edit {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #60a5fa;
+            border-radius: 8px;
+            padding: 9px 12px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
         .btn-delete {
             background: rgba(239, 68, 68, 0.12);
             border: 1px solid rgba(239, 68, 68, 0.3);
@@ -623,7 +634,7 @@
         </div>
 
         <!-- Main Entry Form -->
-        <div class="card">
+        <div class="card" id="activeFormCard">
             <div class="save-indicator" id="saveIndicator">✓ Live Auto-Saved</div>
 
             <!-- 1. VEHICLE DETAILS -->
@@ -781,7 +792,7 @@
                 </div>
             </div>
 
-            <button class="btn-add" onclick="addCar()">
+            <button class="btn-add" id="btnSaveActive" onclick="addCar()">
                 💾 Save Vehicle to Active Hub
             </button>
         </div>
@@ -818,7 +829,7 @@
             <p class="hero-subtitle">Direct buy price & sell price tracking without market estimates.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="quickFormCard">
             <!-- 1. VEHICLE DETAILS -->
             <div class="section-header">
                 <div class="section-header-left">
@@ -960,7 +971,7 @@
                 </div>
             </div>
 
-            <button class="btn-add" onclick="addQuickCar()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+            <button class="btn-add" id="btnSaveQuick" onclick="addQuickCar()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
                 💾 Save Bought Vehicle
             </button>
         </div>
@@ -1012,7 +1023,7 @@
             <p class="hero-subtitle">Set baseline "Good Buy" prices & target mileage for vehicle configurations.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="refFormCard">
             <div class="section-header">
                 <div class="section-header-left">
                     <div class="num-badge">1</div>
@@ -1111,7 +1122,7 @@
                 </div>
             </div>
 
-            <button class="btn-add" onclick="savePriceReference()">
+            <button class="btn-add" id="btnSaveRef" onclick="savePriceReference()">
                 💾 Save Reference Price
             </button>
         </div>
@@ -1190,7 +1201,7 @@
             <p class="hero-subtitle">Log cars spotted at local dealerships or markets with price & details.</p>
         </div>
 
-        <div class="card">
+        <div class="card" id="sightFormCard">
             <!-- 1. VEHICLE DETAILS -->
             <div class="section-header">
                 <div class="section-header-left">
@@ -1331,7 +1342,7 @@
                 </div>
             </div>
 
-            <button class="btn-add" onclick="addSightingCar()" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">
+            <button class="btn-add" id="btnSaveSight" onclick="addSightingCar()" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">
                 💾 Save Market Sighting
             </button>
         </div>
@@ -1418,6 +1429,12 @@
     let priceReferences = JSON.parse(localStorage.getItem('dealershipPriceReferences')) || [];
     let sightingsCars = JSON.parse(localStorage.getItem('dealershipSightingsCars')) || [];
     let startingCapital = parseFloat(localStorage.getItem('dealershipStartingCapital')) || 0;
+    
+    // Track edit indices for each tab
+    let editingActiveId = null;
+    let editingQuickId = null;
+    let editingSightId = null;
+    let editingRefId = null;
     let activeCarToSell = null;
 
     window.onload = function() {
@@ -1514,25 +1531,61 @@
 
         const todayDate = new Date().toISOString().split('T')[0];
 
-        const newSighting = {
-            id: Date.now(),
+        const sightingData = {
+            id: editingSightId || Date.now(),
             fullName: `${brand} ${model} ${year} ${trim}`.trim(),
             brand, model, trim, year, km, condition, warranty, turbo, hybrid,
             price, dealerName, location, contact, notes,
-            dateSpotted: todayDate
+            dateSpotted: editingSightId ? (sightingsCars.find(c => c.id === editingSightId)?.dateSpotted || todayDate) : todayDate
         };
 
-        sightingsCars.push(newSighting);
-        localStorage.setItem('dealershipSightingsCars', JSON.stringify(sightingsCars));
+        if (editingSightId) {
+            const index = sightingsCars.findIndex(c => c.id === editingSightId);
+            if (index !== -1) sightingsCars[index] = sightingData;
+            editingSightId = null;
+            document.getElementById('btnSaveSight').innerHTML = '💾 Save Market Sighting';
+        } else {
+            sightingsCars.push(sightingData);
+        }
 
+        localStorage.setItem('dealershipSightingsCars', JSON.stringify(sightingsCars));
         document.querySelectorAll('#tabSightings input').forEach(i => i.value = '');
         renderSightingsCars();
+    }
+
+    function editSightingCar(id) {
+        const car = sightingsCars.find(c => c.id === id);
+        if (!car) return;
+
+        editingSightId = id;
+        document.getElementById('sightBrand').value = car.brand || '';
+        document.getElementById('sightModel').value = car.model || '';
+        document.getElementById('sightTrim').value = car.trim || '';
+        document.getElementById('sightYear').value = car.year || '';
+        document.getElementById('sightKm').value = car.km || '';
+        document.getElementById('sightCondition').value = car.condition || 'Clean';
+        document.getElementById('sightWarranty').value = car.warranty || 'Under Warranty';
+        document.getElementById('sightTurbo').value = car.turbo || 'Non-Turbo';
+        document.getElementById('sightHybrid').value = car.hybrid || 'Gasoline';
+        document.getElementById('sightPrice').value = car.price || '';
+        document.getElementById('sightDealerName').value = car.dealerName || '';
+        document.getElementById('sightLocation').value = car.location || '';
+        document.getElementById('sightContact').value = car.contact || '';
+        document.getElementById('sightNotes').value = car.notes || '';
+
+        document.getElementById('btnSaveSight').innerHTML = '🔄 Update Market Sighting';
+        document.getElementById('sightFormCard').scrollIntoView({ behavior: 'smooth' });
     }
 
     function deleteSightingCar(id) {
         if (confirm("Are you sure you want to delete this sighting record?")) {
             sightingsCars = sightingsCars.filter(c => c.id !== id);
             localStorage.setItem('dealershipSightingsCars', JSON.stringify(sightingsCars));
+            if (editingSightId === id) {
+                editingSightId = null;
+                document.getElementById('btnSaveSight').innerHTML = '💾 Save Market Sighting';
+                document.querySelectorAll('#tabSightings input').forEach(i => i.value = '');
+            }
             renderSightingsCars();
         }
     }
@@ -1604,6 +1657,9 @@
                         ${car.notes ? `<p style="font-size:10.5px; color:#94a3b8;">📝 Note: ${car.notes}</p>` : ''}
 
                         <div class="action-buttons">
+                            <button class="btn-edit" onclick="editSightingCar(${car.id})">
+                                ✏️ Edit
+                            </button>
                             <button class="btn-whatsapp" onclick="sendToWhatsApp('${carJsonEncoded}')">
                                 💬 WhatsApp
                             </button>
@@ -1646,30 +1702,65 @@
         const todayDate = new Date().toISOString().split('T')[0];
 
         const newCar = {
-            id: Date.now(),
+            id: editingQuickId || Date.now(),
             fullName: `${brand} ${model} ${year} ${trim}`.trim(),
             brand, model, trim, year, km, condition, warranty, turbo, hybrid,
             asking: buyPrice,
             market: sellPrice,
             target: buyPrice,
             dateBought: dateBought || todayDate,
-            dateAdded: todayDate,
+            dateAdded: editingQuickId ? (quickCars.find(c => c.id === editingQuickId)?.dateAdded || todayDate) : todayDate,
             notes,
             isQuickTrade: true
         };
 
-        quickCars.push(newCar);
-        localStorage.setItem('dealershipQuickCars', JSON.stringify(quickCars));
+        if (editingQuickId) {
+            const index = quickCars.findIndex(c => c.id === editingQuickId);
+            if (index !== -1) quickCars[index] = newCar;
+            editingQuickId = null;
+            document.getElementById('btnSaveQuick').innerHTML = '💾 Save Bought Vehicle';
+        } else {
+            quickCars.push(newCar);
+        }
 
+        localStorage.setItem('dealershipQuickCars', JSON.stringify(quickCars));
         document.querySelectorAll('#tabQuickTrade input').forEach(i => i.value = '');
         renderQuickCars();
         renderCapital();
+    }
+
+    function editQuickCar(id) {
+        const car = quickCars.find(c => c.id === id);
+        if (!car) return;
+
+        editingQuickId = id;
+        document.getElementById('quickBrand').value = car.brand || '';
+        document.getElementById('quickModel').value = car.model || '';
+        document.getElementById('quickTrim').value = car.trim || '';
+        document.getElementById('quickYear').value = car.year || '';
+        document.getElementById('quickKm').value = car.km || '';
+        document.getElementById('quickCondition').value = car.condition || 'Clean';
+        document.getElementById('quickWarranty').value = car.warranty || 'No Warranty';
+        document.getElementById('quickTurbo').value = car.turbo || 'Non-Turbo';
+        document.getElementById('quickHybrid').value = car.hybrid || 'Gasoline';
+        document.getElementById('quickBuyPrice').value = car.asking || '';
+        document.getElementById('quickSellPrice').value = car.market || '';
+        document.getElementById('quickDateBought').value = car.dateBought || '';
+        document.getElementById('quickNotes').value = car.notes || '';
+
+        document.getElementById('btnSaveQuick').innerHTML = '🔄 Update Bought Vehicle';
+        document.getElementById('quickFormCard').scrollIntoView({ behavior: 'smooth' });
     }
 
     function deleteQuickCar(id) {
         if (confirm("Are you sure you want to delete this quick deal?")) {
             quickCars = quickCars.filter(c => c.id !== id);
             localStorage.setItem('dealershipQuickCars', JSON.stringify(quickCars));
+            if (editingQuickId === id) {
+                editingQuickId = null;
+                document.getElementById('btnSaveQuick').innerHTML = '💾 Save Bought Vehicle';
+                document.querySelectorAll('#tabQuickTrade input').forEach(i => i.value = '');
+            }
             renderQuickCars();
             renderCapital();
         }
@@ -1717,8 +1808,11 @@
                         ${car.notes ? `<p style="font-size:10.5px; color:#94a3b8;">📝 Note: ${car.notes}</p>` : ''}
 
                         <div class="action-buttons">
+                            <button class="btn-edit" onclick="editQuickCar(${car.id})">
+                                ✏️ Edit
+                            </button>
                             <button class="btn-sell" onclick="openSoldModalFromQuick(${car.id})">
-                                🤝 Sell & Calculate Profit
+                                🤝 Sell
                             </button>
                             <button class="btn-whatsapp" onclick="sendToWhatsApp('${carJsonEncoded}')">
                                 💬 WhatsApp
@@ -1820,6 +1914,7 @@
     }
 
     function autoSaveDraft() {
+        if (editingActiveId) return; // Do not overwrite auto-save draft while in explicit edit mode
         const draft = {
             brand: document.getElementById('brand').value,
             model: document.getElementById('model').value,
@@ -1947,15 +2042,23 @@
         const todayDate = new Date().toISOString().split('T')[0];
 
         const newCar = {
-            id: Date.now(),
+            id: editingActiveId || Date.now(),
             fullName: `${brand} ${model} ${year} ${trim}`.trim(),
             brand, model, trim, year, km, condition, warranty, turbo, hybrid,
             asking, market, target, dateBought,
-            dateAdded: todayDate,
+            dateAdded: editingActiveId ? (cars.find(c => c.id === editingActiveId)?.dateAdded || todayDate) : todayDate,
             notes
         };
 
-        cars.push(newCar);
+        if (editingActiveId) {
+            const index = cars.findIndex(c => c.id === editingActiveId);
+            if (index !== -1) cars[index] = newCar;
+            editingActiveId = null;
+            document.getElementById('btnSaveActive').innerHTML = '💾 Save Vehicle to Active Hub';
+        } else {
+            cars.push(newCar);
+        }
+
         localStorage.setItem('dealershipCarHub', JSON.stringify(cars));
 
         document.querySelectorAll('#tabActive input').forEach(i => i.value = '');
@@ -1966,10 +2069,40 @@
         renderCapital();
     }
 
+    function editCar(id) {
+        const car = cars.find(c => c.id === id);
+        if (!car) return;
+
+        editingActiveId = id;
+        document.getElementById('brand').value = car.brand || '';
+        document.getElementById('model').value = car.model || '';
+        document.getElementById('trim').value = car.trim || '';
+        document.getElementById('year').value = car.year || '';
+        document.getElementById('km').value = car.km || '';
+        document.getElementById('condition').value = car.condition || 'Clean';
+        document.getElementById('warranty').value = car.warranty || 'Under Warranty';
+        document.getElementById('turbo').value = car.turbo || 'Turbo';
+        document.getElementById('hybrid').value = car.hybrid || 'Gasoline';
+        document.getElementById('askingPrice').value = car.asking || '';
+        document.getElementById('marketPrice').value = car.market || '';
+        document.getElementById('targetPrice').value = car.target || '';
+        document.getElementById('dateBought').value = car.dateBought || '';
+        document.getElementById('notes').value = car.notes || '';
+
+        updateLiveProfit();
+        document.getElementById('btnSaveActive').innerHTML = '🔄 Update Vehicle Entry';
+        document.getElementById('activeFormCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
     function deleteCar(id) {
         if (confirm("Are you sure you want to delete this car?")) {
             cars = cars.filter(c => c.id !== id);
             localStorage.setItem('dealershipCarHub', JSON.stringify(cars));
+            if (editingActiveId === id) {
+                editingActiveId = null;
+                document.getElementById('btnSaveActive').innerHTML = '💾 Save Vehicle to Active Hub';
+                document.querySelectorAll('#tabActive input').forEach(i => i.value = '');
+            }
             renderCars();
             renderCapital();
         }
@@ -2001,27 +2134,34 @@
             return;
         }
 
-        const existingIndex = priceReferences.findIndex(r => 
-            r.brand === brand &&
-            r.model === model &&
-            r.trim === trim &&
-            r.year === year &&
-            r.condition === condition &&
-            r.warranty === warranty &&
-            r.turbo === turbo &&
-            r.hybrid === hybrid
-        );
-
         const newRef = {
-            id: Date.now(),
+            id: editingRefId || Date.now(),
             fullName: `${brand} ${model} ${year} ${trim}`.trim(),
             brand, model, trim, year, km, condition, warranty, turbo, hybrid, goodPrice
         };
 
-        if (existingIndex !== -1) {
-            priceReferences[existingIndex] = newRef;
+        if (editingRefId) {
+            const index = priceReferences.findIndex(r => r.id === editingRefId);
+            if (index !== -1) priceReferences[index] = newRef;
+            editingRefId = null;
+            document.getElementById('btnSaveRef').innerHTML = '💾 Save Reference Price';
         } else {
-            priceReferences.push(newRef);
+            const existingIndex = priceReferences.findIndex(r => 
+                r.brand === brand &&
+                r.model === model &&
+                r.trim === trim &&
+                r.year === year &&
+                r.condition === condition &&
+                r.warranty === warranty &&
+                r.turbo === turbo &&
+                r.hybrid === hybrid
+            );
+
+            if (existingIndex !== -1) {
+                priceReferences[existingIndex] = newRef;
+            } else {
+                priceReferences.push(newRef);
+            }
         }
 
         localStorage.setItem('dealershipPriceReferences', JSON.stringify(priceReferences));
@@ -2038,10 +2178,35 @@
         alert("Reference Benchmark Price saved successfully!");
     }
 
+    function editReference(id) {
+        const ref = priceReferences.find(r => r.id === id);
+        if (!ref) return;
+
+        editingRefId = id;
+        document.getElementById('refBrand').value = ref.brand || '';
+        document.getElementById('refModel').value = ref.model || '';
+        document.getElementById('refTrim').value = ref.trim || '';
+        document.getElementById('refYear').value = ref.year || '';
+        document.getElementById('refKm').value = ref.km || '';
+        document.getElementById('refCondition').value = ref.condition || 'Clean';
+        document.getElementById('refWarranty').value = ref.warranty || 'Under Warranty';
+        document.getElementById('refTurbo').value = ref.turbo || 'Turbo';
+        document.getElementById('refHybrid').value = ref.hybrid || 'Gasoline';
+        document.getElementById('refGoodPrice').value = ref.goodPrice || '';
+
+        document.getElementById('btnSaveRef').innerHTML = '🔄 Update Reference Price';
+        document.getElementById('refFormCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
     function deleteReference(id) {
         if (confirm("Are you sure you want to delete this price reference?")) {
             priceReferences = priceReferences.filter(r => r.id !== id);
             localStorage.setItem('dealershipPriceReferences', JSON.stringify(priceReferences));
+            if (editingRefId === id) {
+                editingRefId = null;
+                document.getElementById('btnSaveRef').innerHTML = '💾 Save Reference Price';
+                document.querySelectorAll('#tabReference input').forEach(i => i.value = '');
+            }
             renderReferenceList();
             updateLiveProfit();
         }
@@ -2081,7 +2246,10 @@
                         </div>
 
                         <div class="action-buttons">
-                            <button class="btn-delete" style="width:100%;" onclick="deleteReference(${ref.id})">
+                            <button class="btn-edit" style="flex:1;" onclick="editReference(${ref.id})">
+                                ✏️ Edit Reference
+                            </button>
+                            <button class="btn-delete" style="flex:1;" onclick="deleteReference(${ref.id})">
                                 Delete Reference
                             </button>
                         </div>
@@ -2232,8 +2400,11 @@ ${car.notes ? `\n📝 *Notes:* ${car.notes}` : ''}`;
                         ${car.notes ? `<p style="font-size:10.5px; color:#94a3b8;">📝 Note: ${car.notes}</p>` : ''}
 
                         <div class="action-buttons">
+                            <button class="btn-edit" onclick="editCar(${car.id})">
+                                ✏️ Edit
+                            </button>
                             <button class="btn-sell" onclick="openSoldModal(${car.id})">
-                                🤝 Sell Vehicle
+                                🤝 Sell
                             </button>
                             <button class="btn-whatsapp" onclick="sendToWhatsApp('${carJsonEncoded}')">
                                 💬 WhatsApp
